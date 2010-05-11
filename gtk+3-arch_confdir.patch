@@ -1,0 +1,110 @@
+diff -urN gtk+-2.90.0/gdk-pixbuf/gdk-pixbuf-io.c gtk+-2.90.0.new//gdk-pixbuf/gdk-pixbuf-io.c
+--- gtk+-2.90.0/gdk-pixbuf/gdk-pixbuf-io.c	2010-05-10 15:16:31.000000000 +0200
++++ gtk+-2.90.0.new//gdk-pixbuf/gdk-pixbuf-io.c	2010-05-11 21:26:17.709131700 +0200
+@@ -305,7 +305,7 @@
+   gchar *result = g_strdup (g_getenv ("GDK_PIXBUF_MODULE_FILE"));
+ 
+   if (!result)
+-	  result = g_build_filename (GTK_SYSCONFDIR, "gtk-3.0", "gdk-pixbuf.loaders", NULL);
++	  result = g_build_filename (GTK_SYSCONFDIR, "gdk-pixbuf.loaders", NULL);
+ 
+   return result;
+ }
+diff -urN gtk+-2.90.0/gdk-pixbuf/Makefile.am gtk+-2.90.0.new//gdk-pixbuf/Makefile.am
+--- gtk+-2.90.0/gdk-pixbuf/Makefile.am	2010-05-08 07:29:27.000000000 +0200
++++ gtk+-2.90.0.new//gdk-pixbuf/Makefile.am	2010-05-11 21:28:51.504925644 +0200
+@@ -710,8 +710,8 @@
+ # after the libraries are installed in their final locations.
+ install-data-hook: install-ms-lib install-def-file
+ 	@if $(RUN_QUERY_LOADER_TEST) ; then \
+-	  $(mkinstalldirs) $(DESTDIR)$(sysconfdir)/gtk-3.0 ; \
+-	  $(top_builddir)/gdk-pixbuf/gdk-pixbuf-query-loaders-3.0 > $(DESTDIR)$(sysconfdir)/gtk-3.0/gdk-pixbuf.loaders ; \
++	  $(mkinstalldirs) $(DESTDIR)$(sysconfdir) ; \
++	  $(top_builddir)/gdk-pixbuf/gdk-pixbuf-query-loaders-3.0 > $(DESTDIR)$(sysconfdir)/gdk-pixbuf.loaders ; \
+ 	else \
+ 	  echo "***" ; \
+ 	  echo "*** Warning: gdk-pixbuf.loaders not built" ; \
+@@ -722,7 +722,7 @@
+ 	fi
+ 
+ uninstall-local: uninstall-ms-lib uninstall-def-file
+-	rm -f $(DESTDIR)$(sysconfdir)/gtk-3.0/gdk-pixbuf.loaders
++	rm -f $(DESTDIR)$(sysconfdir)/gdk-pixbuf.loaders
+ 
+ if CROSS_COMPILING
+ else
+diff -urN gtk+-2.90.0/gtk/gtkrc.c gtk+-2.90.0.new//gtk/gtkrc.c
+--- gtk+-2.90.0/gtk/gtkrc.c	2010-05-10 15:16:31.000000000 +0200
++++ gtk+-2.90.0.new//gtk/gtkrc.c	2010-05-11 21:30:31.095772815 +0200
+@@ -452,7 +452,7 @@
+       if (im_module_file)
+ 	result = g_strdup (im_module_file);
+       else
+-	result = g_build_filename (GTK_SYSCONFDIR, "gtk-3.0", "gtk.immodules", NULL);
++	result = g_build_filename (GTK_SYSCONFDIR, "gtk.immodules", NULL);
+     }
+ 
+   return result;
+diff -urN gtk+-2.90.0/gtk-zip.sh.in gtk+-2.90.0.new//gtk-zip.sh.in
+--- gtk+-2.90.0/gtk-zip.sh.in	2010-05-10 21:57:30.000000000 +0200
++++ gtk+-2.90.0.new//gtk-zip.sh.in	2010-05-11 21:32:08.524884752 +0200
+@@ -17,10 +17,10 @@
+ 
+ rm $ZIP
+ zip $ZIP -@ <<EOF
+-etc/gtk-@GTK_API_VERSION@/gdk-pixbuf.loaders
+-etc/gtk-@GTK_API_VERSION@/gtkrc
+-etc/gtk-@GTK_API_VERSION@/gtk.immodules
+-etc/gtk-@GTK_API_VERSION@/im-multipress.conf
++etc/gtk-@GTK_API_VERSION@-@ARCH@/gdk-pixbuf.loaders
++etc/gtk-@GTK_API_VERSION@-@ARCH@/gtkrc
++etc/gtk-@GTK_API_VERSION@-@ARCH@/gtk.immodules
++etc/gtk-@GTK_API_VERSION@-@ARCH@/im-multipress.conf
+ bin/libgdk_pixbuf-@GTK_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+ bin/libgdk-win32-@GTK_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+ bin/libgtk-win32-@GTK_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+diff -urN gtk+-2.90.0/modules/input/Makefile.am gtk+-2.90.0.new//modules/input/Makefile.am
+--- gtk+-2.90.0/modules/input/Makefile.am	2010-05-08 07:29:27.000000000 +0200
++++ gtk+-2.90.0.new//modules/input/Makefile.am	2010-05-11 21:34:23.598223475 +0200
+@@ -156,7 +156,7 @@
+ endif
+ endif
+ 
+-multipress_defs = -DMULTIPRESS_LOCALEDIR=\""$(mplocaledir)"\" -DMULTIPRESS_CONFDIR=\""$(sysconfdir)/gtk-2.0"\"
++multipress_defs = -DMULTIPRESS_LOCALEDIR=\""$(mplocaledir)"\" -DMULTIPRESS_CONFDIR=\""$(sysconfdir)"\"
+ im_multipress_la_CPPFLAGS = $(multipress_defs)
+ libstatic_im_multipress_la_CPPFLAGS = $(im_multipress_la_CPPFLAGS)
+ im_multipress_la_LDFLAGS = -rpath $(moduledir) -avoid-version -module $(no_undefined)
+@@ -172,7 +172,7 @@
+ MULTIPRESS_MODULE = im-multipress.la
+ endif
+ 
+-imconffiledir = $(sysconfdir)/gtk-3.0
++imconffiledir = $(sysconfdir)
+ dist_imconffile_DATA = im-multipress.conf
+ 
+ if CROSS_COMPILING
+@@ -189,10 +189,10 @@
+ # after the libraries are installed in their final locations.
+ install-data-hook:
+ 	@if $(RUN_QUERY_IMMODULES_TEST) ; then \
+-	  echo $(mkinstalldirs) $(DESTDIR)$(sysconfdir)/gtk-3.0 ; \
+-	  $(mkinstalldirs) $(DESTDIR)$(sysconfdir)/gtk-3.0 ; \
+-	  echo "$(top_builddir)/gtk/gtk-query-immodules-3.0 > $(DESTDIR)$(sysconfdir)/gtk-3.0/gtk.immodules" ; \
+-	  $(top_builddir)/gtk/gtk-query-immodules-3.0 > $(DESTDIR)$(sysconfdir)/gtk-3.0/gtk.immodules ; \
++	  echo $(mkinstalldirs) $(DESTDIR)$(sysconfdir) ; \
++	  $(mkinstalldirs) $(DESTDIR)$(sysconfdir) ; \
++	  echo "$(top_builddir)/gtk/gtk-query-immodules-3.0 > $(DESTDIR)$(sysconfdir)/gtk.immodules" ; \
++	  $(top_builddir)/gtk/gtk-query-immodules-3.0 > $(DESTDIR)$(sysconfdir)/gtk.immodules ; \
+ 	else \
+ 	  echo "***" ; \
+ 	  echo "*** Warning: gtk.immodules not built" ; \
+@@ -203,7 +203,7 @@
+         fi
+ 
+ uninstall-local:
+-	rm -f $(DESTDIR)$(sysconfdir)/gtk-3.0/gtk.immodules
++	rm -f $(DESTDIR)$(sysconfdir)/gtk.immodules
+ 
+ if BUILD_DYNAMIC_MODULES
+ 
