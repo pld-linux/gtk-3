@@ -19,13 +19,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	2.90.0
+Version:	2.90.2
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.90/gtk+-%{version}.tar.bz2
-# Source0-md5:	fd30684a0f7ced548add1bd5e23ff439
-Patch0:		%{name}-arch_confdir.patch
+# Source0-md5:	bb6905bc56d88afc3fd399423c0888fb
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
@@ -35,8 +34,8 @@ BuildRequires:	cairo-devel >= 1.6.0
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.24.0
-BuildRequires:	gobject-introspection-devel >= 0.6.7
+BuildRequires:	glib2-devel >= 1:2.25.8
+BuildRequires:	gobject-introspection-devel >= 0.6.14
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
 BuildRequires:	jasper-devel
@@ -64,7 +63,7 @@ BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
 Requires:	atk >= 1:1.30.0
 Requires:	cairo >= 1.6.0
-Requires:	glib2 >= 1:2.24.0
+Requires:	glib2 >= 1:2.25.8
 Requires:	pango >= 1:1.26.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 %if %{with cups}
@@ -77,10 +76,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %if "%{_lib}" != "lib"
 %define		libext		%(lib="%{_lib}"; echo ${lib#lib})
-%define		_sysconfdir	/etc/gtk%{libext}-3.0
 %define		pqext		-%{libext}
 %else
-%define		_sysconfdir	/etc/gtk-3.0
 %define		pqext		%{nil}
 %endif
 
@@ -139,7 +136,7 @@ Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:1.30.0
-Requires:	glib2-devel >= 1:2.24.0
+Requires:	glib2-devel >= 1:2.25.8
 Requires:	pango-devel >= 1:1.26.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
@@ -210,7 +207,6 @@ Moduł GTK+ do drukowania przez CUPS.
 
 %prep
 %setup -q -n gtk+-%{version}
-%patch0 -p1
 
 %build
 rm m4/introspection.m4
@@ -240,8 +236,8 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-touch $RPM_BUILD_ROOT%{_sysconfdir}/gdk-pixbuf.loaders
-touch $RPM_BUILD_ROOT%{_sysconfdir}/gtk.immodules
+touch $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/gdk-pixbuf.loaders
+touch $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
 
 cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
@@ -269,21 +265,16 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig
 umask 022
-%{_bindir}/gdk-pixbuf-query-loaders-3.0%{pqext} > %{_sysconfdir}/gdk-pixbuf.loaders
-%{_bindir}/gtk-query-immodules-3.0%{pqext} > %{_sysconfdir}/gtk.immodules
+%{_bindir}/gdk-pixbuf-query-loaders-3.0%{pqext} --update-cache
+%{_bindir}/gtk-query-immodules-3.0%{pqext} --update-cache
 exit 0
 
 %postun
 /sbin/ldconfig
 if [ "$1" != "0" ]; then
 	umask 022
-	# we need to check for dir existence for multilib installs as the $1 is 1
-	# if we remove the other arch pkg will be still present.
-	# i.e we have installed gtk+2-2.16.5-1.x86_64 and gtk+2-2.16.5-1.i686, and remove gtk+2-2.16.5-1.i686
-	if [ -d %{_sysconfdir} ]; then
-		%{_bindir}/gdk-pixbuf-query-loaders-3.0%{pqext} > %{_sysconfdir}/gdk-pixbuf.loaders
-		%{_bindir}/gtk-query-immodules-3.0%{pqext} > %{_sysconfdir}/gtk.immodules
-	fi
+	%{_bindir}/gdk-pixbuf-query-loaders-3.0%{pqext} --update-cache
+	%{_bindir}/gtk-query-immodules-3.0%{pqext} --update-cache
 fi
 exit 0
 
@@ -295,7 +286,7 @@ exit 0
 %attr(755,root,root) %{_bindir}/gtk-update-icon-cache-3.0
 %attr(755,root,root) %{_bindir}/gtk3-demo
 %attr(755,root,root) %{_libdir}/libgailutil-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgailutil-3.0.so.18
+%attr(755,root,root) %ghost %{_libdir}/libgailutil-3.0.so.0
 %attr(755,root,root) %{_libdir}/libgdk-x11-3.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgdk-x11-3.0.so.0
 %attr(755,root,root) %{_libdir}/libgdk_pixbuf-3.0.so.*.*.*
@@ -314,6 +305,8 @@ exit 0
 %dir %{_libdir}/gtk-3.0/%{abivers}/printbackends
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libferret.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libgail.so
+%ghost %{_libdir}/gtk-3.0/%{abivers}/gdk-pixbuf.loaders
+%ghost %{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/engines/libpixmap.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-*.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/loaders/libpixbufloader-*.so
@@ -321,15 +314,14 @@ exit 0
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-lpr.so
 %{_libdir}/girepository-1.0/Gdk-3.0.typelib
 %{_libdir}/girepository-1.0/GdkPixbuf-3.0.typelib
+%{_libdir}/girepository-1.0/GdkX11-3.0.typelib
 %{_libdir}/girepository-1.0/Gtk-3.0.typelib
 
 ## XXX: just demo data - move to examples?
 %{_datadir}/gtk-3.0
 
-%dir %{_sysconfdir}
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/im-multipress.conf
-%ghost %{_sysconfdir}/gdk-pixbuf.loaders
-%ghost %{_sysconfdir}/gtk.immodules
+%dir %{_sysconfdir}/gtk-3.0
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gtk-3.0/im-multipress.conf
 %dir %{_datadir}/themes/Default/gtk-*
 %{_datadir}/themes/Default/gtk-*/gtkrc
 %dir %{_datadir}/themes/Emacs
@@ -359,8 +351,7 @@ exit 0
 %{_libdir}/libgtk-x11-3.0.la
 %{_includedir}/gail-3.0
 %{_includedir}/gtk-3.0
-# this file is packaged in gtk+2
-#%{_aclocaldir}/gtk-2.0.m4
+%{_aclocaldir}/gtk-3.0.m4
 %{_libdir}/gtk-3.0/include
 %{_pkgconfigdir}/gail-3.0.pc
 %{_pkgconfigdir}/gdk-3.0.pc
@@ -374,6 +365,7 @@ exit 0
 %{_mandir}/man1/gtk-builder-convert-3.0.1*
 %{_datadir}/gir-1.0/Gdk-3.0.gir
 %{_datadir}/gir-1.0/GdkPixbuf-3.0.gir
+%{_datadir}/gir-1.0/GdkX11-3.0.gir
 %{_datadir}/gir-1.0/Gtk-3.0.gir
 
 %if %{with static_libs}
