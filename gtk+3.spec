@@ -19,24 +19,24 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	2.90.4
+Version:	2.91.2
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.90/gtk+-%{version}.tar.bz2
-# Source0-md5:	c70b0c0617b02de3d1ff24a8b1fad5e6
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.91/gtk+-%{version}.tar.bz2
+# Source0-md5:	f76a7627f016b5516e264ec043d912ce
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	cairo-devel >= 1.6.0
+BuildRequires:	cairo-gobject-devel >= 1.10.0
 %{?with_cups:BuildRequires:	cups-devel}
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.21.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.25.9
-BuildRequires:	gobject-introspection-devel >= 0.6.14
+BuildRequires:	glib2-devel >= 1:2.27.1
+BuildRequires:	gobject-introspection-devel >= 0.9.3
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
 BuildRequires:	libtool >= 1:1.4.2-9
@@ -58,10 +58,11 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
+Requires(post,postun):	glib2 >= 1:2.27.1
 Requires:	atk >= 1:1.30.0
-Requires:	cairo >= 1.6.0
+Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.21.0
-Requires:	glib2 >= 1:2.25.9
+Requires:	glib2 >= 1:2.27.1
 Requires:	pango >= 1:1.26.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 %if %{with cups}
@@ -135,7 +136,7 @@ Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:1.30.0
 Requires:	gdk-pixbuf2-devel >= 2.21.0
-Requires:	glib2-devel >= 1:2.25.9
+Requires:	glib2-devel >= 1:2.27.1
 Requires:	pango-devel >= 1:1.26.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
@@ -216,11 +217,11 @@ rm m4/introspection.m4
 %{__autoconf}
 %{__automake}
 %configure \
+	--disable-silent-rules \
 	%{!?with_cups:ac_cv_path_CUPS_CONFIG=no} \
 	%{?debug:--enable-debug=yes} \
 	--%{?with_apidocs:en}%{!?with_apidocs:dis}able-gtk-doc \
 	--enable-man \
-	--enable-shm \
 	--%{?with_static_libs:en}%{!?with_static_libs:dis}able-static \
 	--with-gdktarget=x11 \
 	--with-html-dir=%{_gtkdocdir} \
@@ -261,16 +262,17 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig
 umask 022
-%{_bindir}/gdk-pixbuf-query-loaders-3.0%{pqext} --update-cache
 %{_bindir}/gtk-query-immodules-3.0%{pqext} --update-cache
+%{_bindir}/glib-compile-schemas %{_datadir}/glib-2.0/schemas
 exit 0
 
 %postun
 /sbin/ldconfig
 if [ "$1" != "0" ]; then
 	umask 022
-	%{_bindir}/gdk-pixbuf-query-loaders-3.0%{pqext} --update-cache
 	%{_bindir}/gtk-query-immodules-3.0%{pqext} --update-cache
+else
+	%{_bindir}/glib-compile-schemas %{_datadir}/glib-2.0/schemas
 fi
 exit 0
 
@@ -309,6 +311,7 @@ exit 0
 
 %dir %{_sysconfdir}/gtk-3.0
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gtk-3.0/im-multipress.conf
+%{_datadir}/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 %dir %{_datadir}/themes/Default/gtk-*
 %{_datadir}/themes/Default/gtk-*/gtkrc
 %dir %{_datadir}/themes/Emacs
