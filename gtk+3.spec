@@ -19,12 +19,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	2.91.2
+Version:	2.91.3
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.91/gtk+-%{version}.tar.bz2
-# Source0-md5:	f76a7627f016b5516e264ec043d912ce
+# Source0-md5:	69eaef0eb544033c3ef067abcf4812b9
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
@@ -35,7 +35,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.21.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.27.1
+BuildRequires:	glib2-devel >= 1:2.27.2
 BuildRequires:	gobject-introspection-devel >= 0.9.3
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
@@ -62,7 +62,7 @@ Requires(post,postun):	glib2 >= 1:2.27.1
 Requires:	atk >= 1:1.30.0
 Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.21.0
-Requires:	glib2 >= 1:2.27.1
+Requires:	glib2 >= 1:2.27.2
 Requires:	pango >= 1:1.26.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 %if %{with cups}
@@ -136,7 +136,7 @@ Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:1.30.0
 Requires:	gdk-pixbuf2-devel >= 2.21.0
-Requires:	glib2-devel >= 1:2.27.1
+Requires:	glib2-devel >= 1:2.27.2
 Requires:	pango-devel >= 1:1.26.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
