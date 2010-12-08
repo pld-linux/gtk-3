@@ -302,6 +302,18 @@ exit 0
 %{_libdir}/girepository-1.0/Gdk-3.0.typelib
 %{_libdir}/girepository-1.0/GdkX11-3.0.typelib
 %{_libdir}/girepository-1.0/Gtk-3.0.typelib
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-am-et.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-cedilla.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-cyrillic-translit.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-inuktitut.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-ipa.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-multipress.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-thai.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-ti-er.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-ti-et.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-viqr.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-xim.so
+
 
 ## XXX: just demo data - move to examples?
 %{_datadir}/gtk-3.0
