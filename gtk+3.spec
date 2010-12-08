@@ -19,12 +19,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	2.91.5
+Version:	2.91.6
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.91/gtk+-%{version}.tar.bz2
-# Source0-md5:	c4c59e3d63ffb391388ade991c03a3f2
+# Source0-md5:	b2d5e817c8eda5834ba5df6dcbb6e962
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
@@ -292,14 +292,11 @@ exit 0
 %dir %{_libdir}/gtk-3.0
 %dir %{_libdir}/gtk-3.0/modules
 %dir %{_libdir}/gtk-3.0/%{abivers}
-%dir %{_libdir}/gtk-3.0/%{abivers}/engines
 %dir %{_libdir}/gtk-3.0/%{abivers}/immodules
 %dir %{_libdir}/gtk-3.0/%{abivers}/printbackends
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libferret.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libgail.so
 %ghost %{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
-%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/engines/libpixmap.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-*.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-file.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-lpr.so
 %{_libdir}/girepository-1.0/Gdk-3.0.typelib
