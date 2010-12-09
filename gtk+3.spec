@@ -46,7 +46,7 @@ BuildRequires:	pango-devel >= 1:1.26.0
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.197
+BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcomposite-devel
 BuildRequires:	xorg-lib-libXcursor-devel
@@ -261,9 +261,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
+%glib_compile_schemas
 umask 022
 %{_bindir}/gtk-query-immodules-3.0%{pqext} --update-cache
-%{_bindir}/glib-compile-schemas %{_datadir}/glib-2.0/schemas
 exit 0
 
 %postun
@@ -272,7 +272,7 @@ if [ "$1" != "0" ]; then
 	umask 022
 	%{_bindir}/gtk-query-immodules-3.0%{pqext} --update-cache
 else
-	%{_bindir}/glib-compile-schemas %{_datadir}/glib-2.0/schemas
+	%glib_compile_schemas
 fi
 exit 0
 
