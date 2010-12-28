@@ -4,6 +4,7 @@
 #| ./usr/bin/gtk-builder-convert:                                     a python script text executable
 #| /tmp/gtk+2-2.12.8-root-glen $ head -n 1 ./usr/bin/gtk-builder-convert
 #| !/usr/bin/env python
+# - fix libgailutil linking
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
@@ -19,12 +20,13 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	2.91.6
+Version:	2.91.7
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.91/gtk+-%{version}.tar.bz2
-# Source0-md5:	b2d5e817c8eda5834ba5df6dcbb6e962
+# Source0-md5:	221d8f13a75be17f51759bedee7db477
+Patch0:		bashisms.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
@@ -79,6 +81,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %else
 %define		pqext		%{nil}
 %endif
+%define         skip_post_check_so libgailutil-3.0.so.0.0.0
 
 %description
 GTK+, which stands for the GIMP ToolKit, is a library for creating
@@ -207,6 +210,7 @@ Moduł GTK+ do drukowania przez CUPS.
 
 %prep
 %setup -q -n gtk+-%{version}
+%patch0 -p1
 
 %build
 rm m4/introspection.m4
@@ -284,10 +288,10 @@ exit 0
 %attr(755,root,root) %{_bindir}/gtk3-demo
 %attr(755,root,root) %{_libdir}/libgailutil-3.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgailutil-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgdk-x11-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgdk-x11-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgtk-x11-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgtk-x11-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgdk-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgdk-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgtk-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgtk-3.0.so.0
 
 %dir %{_libdir}/gtk-3.0
 %dir %{_libdir}/gtk-3.0/modules
@@ -337,18 +341,17 @@ exit 0
 %doc ChangeLog
 %attr(755,root,root) %{_bindir}/gtk-builder-convert-3.0
 %attr(755,root,root) %{_libdir}/libgailutil-3.0.so
-%attr(755,root,root) %{_libdir}/libgdk-x11-3.0.so
-%attr(755,root,root) %{_libdir}/libgtk-x11-3.0.so
+%attr(755,root,root) %{_libdir}/libgdk-3.0.so
+%attr(755,root,root) %{_libdir}/libgtk-3.0.so
 %{_libdir}/libgailutil-3.0.la
-%{_libdir}/libgdk-x11-3.0.la
-%{_libdir}/libgtk-x11-3.0.la
+%{_libdir}/libgdk-3.0.la
+%{_libdir}/libgtk-3.0.la
 %{_includedir}/gail-3.0
 %{_includedir}/gtk-3.0
 %{_aclocaldir}/gtk-3.0.m4
-%{_libdir}/gtk-3.0/include
 %{_pkgconfigdir}/gail-3.0.pc
 %{_pkgconfigdir}/gdk-3.0.pc
-%{_pkgconfigdir}/gdk-x11-3.0.pc
+%{_pkgconfigdir}/gdk-3.0.pc
 %{_pkgconfigdir}/gtk+-3.0.pc
 %{_pkgconfigdir}/gtk+-unix-print-3.0.pc
 %{_pkgconfigdir}/gtk+-x11-3.0.pc
@@ -361,8 +364,8 @@ exit 0
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgailutil-3.0.a
-%{_libdir}/libgdk-x11-3.0.a
-%{_libdir}/libgtk-x11-3.0.a
+%{_libdir}/libgdk-3.0.a
+%{_libdir}/libgtk-3.0.a
 %endif
 
 %if %{with apidocs}
