@@ -63,6 +63,8 @@ Requires:	gdk-pixbuf2 >= 2.21.0
 Requires:	glib2 >= 1:2.27.3
 Requires:	pango >= 1:1.26.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
+# evince is used as gtk-print-preview-command by default
+Suggests:	evince-backend-pdf
 %if %{with cups}
 # cups is used by default if gtk+ is built with cups
 Suggests:	%{name}-cups = %{version}-%{release}
