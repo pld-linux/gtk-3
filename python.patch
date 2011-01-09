@@ -1,0 +1,8 @@
+--- gtk+-2.99.0/gtk/gtk-builder-convert.wig	2011-01-09 22:55:41.546478959 +0100
++++ gtk+-2.99.0/gtk/gtk-builder-convert	2011-01-09 22:56:25.132114551 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/python
+ #
+ # Copyright (C) 2006-2008 Async Open Source
+ #                         Henrique Romano <henrique@async.com.br>

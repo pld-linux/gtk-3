@@ -1,9 +1,4 @@
 # TODO
-# - solve this:
-#| /tmp/gtk+2-2.12.8-root-glen $ find -type f|xargs file|grep -i python
-#| ./usr/bin/gtk-builder-convert:                                     a python script text executable
-#| /tmp/gtk+2-2.12.8-root-glen $ head -n 1 ./usr/bin/gtk-builder-convert
-#| !/usr/bin/env python
 # - fix libgailutil linking
 #
 # Conditional build:
@@ -20,13 +15,14 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	2.91.7
+Version:	2.99.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.91/gtk+-%{version}.tar.bz2
-# Source0-md5:	221d8f13a75be17f51759bedee7db477
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.99/gtk+-%{version}.tar.bz2
+# Source0-md5:	8991403e30457362f1bf20f1313a6456
 Patch0:		bashisms.patch
+Patch1:		python.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
@@ -125,6 +121,13 @@ rodzaju kontrolek służących do tworzenia interfejsu użytkownika.
 Başlangıçta GIMP için yazılmış X kitaplıkları. Şu anda başka
 programlarca da kullanılmaktadır.
 
+%package -n gtk-update-icon-cache
+Summary:	Update icon cache used by GTK+ library
+Group:		Applications/System
+
+%description -n gtk-update-icon-cache
+Update icon cache used by GTK+ library.
+
 %package devel
 Summary:	GTK+ header files and development documentation
 Summary(cs.UTF-8):	Sada nástrojů GIMP a kreslící kit GIMP
@@ -159,6 +162,15 @@ Header files and development documentation for the GTK+ libraries.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe i dokumentacja do bibliotek GTK+.
+
+%package -n gtk-builder-convert
+Summary:	Convert glade files to GtkBuilder format
+Group:		Development/Tools
+Requires:	python-modules
+
+%description -n gtk-builder-convert
+Converts Glade files into XML files which can be loaded with
+GtkBuilder.
 
 %package static
 Summary:	GTK+ static libraries
@@ -211,6 +223,7 @@ Moduł GTK+ do drukowania przez CUPS.
 %prep
 %setup -q -n gtk+-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 rm m4/introspection.m4
@@ -222,14 +235,16 @@ rm m4/introspection.m4
 %{__automake}
 %configure \
 	--disable-silent-rules \
-	%{!?with_cups:ac_cv_path_CUPS_CONFIG=no} \
+	%{__disable cups} \
 	%{?debug:--enable-debug=yes} \
-	--%{?with_apidocs:en}%{!?with_apidocs:dis}able-gtk-doc \
+	%{__enable_disable apidocs gtk-doc} \
 	--enable-man \
-	--%{?with_static_libs:en}%{!?with_static_libs:dis}able-static \
-	--with-gdktarget=x11 \
+	%{__enable_disable static_libs static} \
+	--enable-x11-backend \
 	--with-html-dir=%{_gtkdocdir} \
-	--with-xinput=yes
+	--enable-xinput \
+	--enable-xkb \
+	--enable-xinerama
 %{__make}
 
 %install
@@ -284,7 +299,6 @@ exit 0
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
 %attr(755,root,root) %{_bindir}/gtk-query-immodules-3.0%{pqext}
-%attr(755,root,root) %{_bindir}/gtk-update-icon-cache-3.0
 %attr(755,root,root) %{_bindir}/gtk3-demo
 %attr(755,root,root) %{_libdir}/libgailutil-3.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgailutil-3.0.so.0
@@ -334,12 +348,15 @@ exit 0
 %dir %{_datadir}/themes/Raleigh/gtk-*
 %{_datadir}/themes/Raleigh/gtk-*/gtkrc
 %{_mandir}/man1/gtk-query-immodules-3.0.1*
-%{_mandir}/man1/gtk-update-icon-cache-3.0.1*
+
+%files -n gtk-update-icon-cache
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/gtk-update-icon-cache
+%{_mandir}/man1/gtk-update-icon-cache.1*
 
 %files devel
 %defattr(644,root,root,755)
 %doc ChangeLog
-%attr(755,root,root) %{_bindir}/gtk-builder-convert-3.0
 %attr(755,root,root) %{_libdir}/libgailutil-3.0.so
 %attr(755,root,root) %{_libdir}/libgdk-3.0.so
 %attr(755,root,root) %{_libdir}/libgtk-3.0.so
@@ -351,14 +368,18 @@ exit 0
 %{_aclocaldir}/gtk-3.0.m4
 %{_pkgconfigdir}/gail-3.0.pc
 %{_pkgconfigdir}/gdk-3.0.pc
-%{_pkgconfigdir}/gdk-3.0.pc
+%{_pkgconfigdir}/gdk-x11-3.0.pc
 %{_pkgconfigdir}/gtk+-3.0.pc
 %{_pkgconfigdir}/gtk+-unix-print-3.0.pc
 %{_pkgconfigdir}/gtk+-x11-3.0.pc
-%{_mandir}/man1/gtk-builder-convert-3.0.1*
 %{_datadir}/gir-1.0/Gdk-3.0.gir
 %{_datadir}/gir-1.0/GdkX11-3.0.gir
 %{_datadir}/gir-1.0/Gtk-3.0.gir
+
+%files -n gtk-builder-convert
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/gtk-builder-convert
+%{_mandir}/man1/gtk-builder-convert.1*
 
 %if %{with static_libs}
 %files static
