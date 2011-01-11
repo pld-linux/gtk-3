@@ -1,6 +1,3 @@
-# TODO
-# - fix libgailutil linking
-#
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_without	cups		# disable CUPS support
@@ -79,7 +76,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %else
 %define		pqext		%{nil}
 %endif
-%define         skip_post_check_so libgailutil-3.0.so.0.0.0
 
 %description
 GTK+, which stands for the GIMP ToolKit, is a library for creating
