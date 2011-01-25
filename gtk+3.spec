@@ -257,8 +257,10 @@ touch $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
 cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 # shut up check-files (static modules and *.la for modules)
-%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules/*.{a,la}
-%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/*/*.{a,la}
+%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules/*.la \
+	%{?with_static_libs:$RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules/*.a}
+%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/*/*.la \
+	%{?with_static_libs:$RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/*/*.a}
 
 %if "%{_lib}" != "lib"
 # We need to have 32-bit and 64-bit binaries as they have hardcoded LIBDIR.
