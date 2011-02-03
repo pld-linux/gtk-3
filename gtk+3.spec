@@ -13,7 +13,7 @@ Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
 Version:	2.99.3
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.99/gtk+-%{version}.tar.bz2
@@ -258,7 +258,7 @@ mv $RPM_BUILD_ROOT%{_bindir}/gtk-query-immodules-3.0{,%{pqext}}
 %endif
 
 # unsupported by glibc
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{az_IR,io}
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{az_IR,io,kg}
 
 %find_lang %{name} --all-name
 
