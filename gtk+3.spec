@@ -12,14 +12,13 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	2.99.1
+Version:	2.99.3
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.99/gtk+-%{version}.tar.bz2
-# Source0-md5:	cdcbaf956c3165ba63db221b3ca2422a
+# Source0-md5:	3464064d36a212b1c051eff59af7a7e9
 Patch0:		bashisms.patch
-Patch1:		python.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
@@ -161,15 +160,6 @@ Header files and development documentation for the GTK+ libraries.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe i dokumentacja do bibliotek GTK+.
 
-%package -n gtk-builder-convert
-Summary:	Convert glade files to GtkBuilder format
-Group:		Development/Tools
-Requires:	python-modules
-
-%description -n gtk-builder-convert
-Converts Glade files into XML files which can be loaded with
-GtkBuilder.
-
 %package static
 Summary:	GTK+ static libraries
 Summary(pl.UTF-8):	Biblioteki statyczne GTK+
@@ -221,7 +211,6 @@ Moduł GTK+ do drukowania przez CUPS.
 %prep
 %setup -q -n gtk+-%{version}
 %patch0 -p1
-%patch1 -p1
 
 %build
 rm m4/introspection.m4
@@ -310,27 +299,29 @@ exit 0
 %dir %{_libdir}/gtk-3.0
 %dir %{_libdir}/gtk-3.0/modules
 %dir %{_libdir}/gtk-3.0/%{abivers}
+%dir %{_libdir}/gtk-3.0/%{abivers}/engines
 %dir %{_libdir}/gtk-3.0/%{abivers}/immodules
 %dir %{_libdir}/gtk-3.0/%{abivers}/printbackends
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libferret.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libgail.so
 %ghost %{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/engines/libpixmap.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-file.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-lpr.so
 %{_libdir}/girepository-1.0/Gdk-3.0.typelib
 %{_libdir}/girepository-1.0/GdkX11-3.0.typelib
 %{_libdir}/girepository-1.0/Gtk-3.0.typelib
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-am-et.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-cedilla.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-cyrillic-translit.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-inuktitut.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-ipa.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-multipress.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-thai.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-ti-er.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-ti-et.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-viqr.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-xim.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-am-et.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-cedilla.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-cyrillic-translit.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-inuktitut.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-ipa.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-multipress.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-thai.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-ti-er.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-ti-et.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-viqr.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-xim.so
 
 
 ## XXX: just demo data - move to examples?
@@ -339,14 +330,14 @@ exit 0
 %dir %{_sysconfdir}/gtk-3.0
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gtk-3.0/im-multipress.conf
 %{_datadir}/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
-%dir %{_datadir}/themes/Default/gtk-*
-%{_datadir}/themes/Default/gtk-*/gtkrc
+%dir %{_datadir}/themes/Default/gtk-3.0
+%{_datadir}/themes/Default/gtk-3.0/gtk-keys.css
 %dir %{_datadir}/themes/Emacs
-%dir %{_datadir}/themes/Emacs/gtk-*
-%{_datadir}/themes/Emacs/gtk-*/gtkrc
+%dir %{_datadir}/themes/Emacs/gtk-3.0
+%{_datadir}/themes/Emacs/gtk-3.0/gtk-keys.css
 %dir %{_datadir}/themes/Raleigh
-%dir %{_datadir}/themes/Raleigh/gtk-*
-%{_datadir}/themes/Raleigh/gtk-*/gtkrc
+%dir %{_datadir}/themes/Raleigh/gtk-3.0
+%{_datadir}/themes/Raleigh/gtk-3.0/gtk.css
 %{_mandir}/man1/gtk-query-immodules-3.0.1*
 
 %files -n gtk-update-icon-cache
@@ -375,11 +366,6 @@ exit 0
 %{_datadir}/gir-1.0/Gdk-3.0.gir
 %{_datadir}/gir-1.0/GdkX11-3.0.gir
 %{_datadir}/gir-1.0/Gtk-3.0.gir
-
-%files -n gtk-builder-convert
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/gtk-builder-convert
-%{_mandir}/man1/gtk-builder-convert.1*
 
 %if %{with static_libs}
 %files static
