@@ -29,7 +29,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.21.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.27.3
+BuildRequires:	glib2-devel >= 1:2.27.93
 BuildRequires:	gobject-introspection-devel >= 0.9.3
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
