@@ -13,12 +13,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	2.99.3
-Release:	3
+Version:	3.0.0
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.99/gtk+-%{version}.tar.bz2
-# Source0-md5:	3464064d36a212b1c051eff59af7a7e9
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.0/gtk+-%{version}.tar.bz2
+# Source0-md5:	8155d7b91cc0c187891349b6fad1a765
 Patch0:		bashisms.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
@@ -28,10 +28,10 @@ BuildRequires:	cairo-gobject-devel >= 1.10.0
 %{?with_cups:BuildRequires:	cups-devel}
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
-BuildRequires:	gdk-pixbuf2-devel >= 2.21.0
+BuildRequires:	gdk-pixbuf2-devel >= 2.22.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.27.93
-BuildRequires:	gobject-introspection-devel >= 0.9.3
+BuildRequires:	glib2-devel >= 1:2.28.0
+BuildRequires:	gobject-introspection-devel >= 0.10.1
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
 BuildRequires:	libtool >= 1:1.4.2-9
@@ -53,11 +53,11 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
-Requires(post,postun):	glib2 >= 1:2.27.1
+Requires(post,postun):	glib2 >= 1:2.28.0
 Requires:	atk >= 1:1.30.0
 Requires:	cairo-gobject >= 1.10.0
-Requires:	gdk-pixbuf2 >= 2.21.0
-Requires:	glib2 >= 1:2.27.3
+Requires:	gdk-pixbuf2 >= 2.22.0
+Requires:	glib2 >= 1:2.28.0
 Requires:	pango >= 1:1.26.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 # evince is used as gtk-print-preview-command by default
@@ -144,8 +144,8 @@ Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:1.30.0
-Requires:	gdk-pixbuf2-devel >= 2.21.0
-Requires:	glib2-devel >= 1:2.27.3
+Requires:	gdk-pixbuf2-devel >= 2.22.0
+Requires:	glib2-devel >= 1:2.28.0
 Requires:	pango-devel >= 1:1.26.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
@@ -217,6 +217,12 @@ Moduł GTK+ do drukowania przez CUPS.
 %prep
 %setup -q -n gtk+-%{version}
 %patch0 -p1
+
+# fix broken tarball
+mkdir docs/reference/{gdk,gtk}/images
+cp docs/reference/gdk/html/*.png docs/reference/gdk/images
+cp docs/reference/gtk/html/*.png docs/reference/gtk/images
+cp docs/reference/gtk/images/gtk-caps-lock-warning.png gtk/stock-icons/24
 
 %build
 %{__rm} m4/introspection.m4
@@ -297,23 +303,23 @@ exit 0
 %doc AUTHORS NEWS README
 %attr(755,root,root) %{_bindir}/gtk-query-immodules-3.0%{pqext}
 %attr(755,root,root) %{_bindir}/gtk3-demo
-%attr(755,root,root) %{_libdir}/libgailutil-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgailutil-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgdk-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgdk-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgtk-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgtk-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgailutil-3.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgailutil-3.so.0
+%attr(755,root,root) %{_libdir}/libgdk-3.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgdk-3.so.0
+%attr(755,root,root) %{_libdir}/libgtk-3.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgtk-3.so.0
 
 %dir %{_libdir}/gtk-3.0
 %dir %{_libdir}/gtk-3.0/modules
 %dir %{_libdir}/gtk-3.0/%{abivers}
-%dir %{_libdir}/gtk-3.0/%{abivers}/engines
+#%dir %{_libdir}/gtk-3.0/%{abivers}/engines
 %dir %{_libdir}/gtk-3.0/%{abivers}/immodules
 %dir %{_libdir}/gtk-3.0/%{abivers}/printbackends
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libferret.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libgail.so
 %ghost %{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
-%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/engines/libpixmap.so
+#%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/engines/libpixmap.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-file.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-lpr.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-am-et.so
@@ -355,9 +361,9 @@ exit 0
 %files devel
 %defattr(644,root,root,755)
 %doc ChangeLog
-%attr(755,root,root) %{_libdir}/libgailutil-3.0.so
-%attr(755,root,root) %{_libdir}/libgdk-3.0.so
-%attr(755,root,root) %{_libdir}/libgtk-3.0.so
+%attr(755,root,root) %{_libdir}/libgailutil-3.so
+%attr(755,root,root) %{_libdir}/libgdk-3.so
+%attr(755,root,root) %{_libdir}/libgtk-3.so
 %{_includedir}/gail-3.0
 %{_includedir}/gtk-3.0
 %{_aclocaldir}/gtk-3.0.m4
@@ -374,9 +380,9 @@ exit 0
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libgailutil-3.0.a
-%{_libdir}/libgdk-3.0.a
-%{_libdir}/libgtk-3.0.a
+%{_libdir}/libgailutil-3.a
+%{_libdir}/libgdk-3.a
+%{_libdir}/libgtk-3.a
 %endif
 
 %if %{with apidocs}
