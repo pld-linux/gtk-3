@@ -1,3 +1,4 @@
+#
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_without	cups		# disable CUPS support
@@ -119,11 +120,16 @@ Başlangıçta GIMP için yazılmış X kitaplıkları. Şu anda başka
 programlarca da kullanılmaktadır.
 
 %package -n gtk-update-icon-cache
-Summary:	Update icon cache used by GTK+ library
+Summary:	Utility to update icon cache used by GTK+ library
+Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
 
 %description -n gtk-update-icon-cache
-Update icon cache used by GTK+ library.
+Utility to update icon cache used by GTK+ library.
+
+%description -n gtk-update-icon-cache -l pl.UTF-8
+Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę
+GTK+.
 
 %package devel
 Summary:	GTK+ header files and development documentation
@@ -213,7 +219,7 @@ Moduł GTK+ do drukowania przez CUPS.
 %patch0 -p1
 
 %build
-rm m4/introspection.m4
+%{__rm} m4/introspection.m4
 %{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
 %{__aclocal} -I m4
@@ -310,9 +316,6 @@ exit 0
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/engines/libpixmap.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-file.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-lpr.so
-%{_libdir}/girepository-1.0/Gdk-3.0.typelib
-%{_libdir}/girepository-1.0/GdkX11-3.0.typelib
-%{_libdir}/girepository-1.0/Gtk-3.0.typelib
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-am-et.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-cedilla.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-cyrillic-translit.so
@@ -324,7 +327,9 @@ exit 0
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-ti-et.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-viqr.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-xim.so
-
+%{_libdir}/girepository-1.0/Gdk-3.0.typelib
+%{_libdir}/girepository-1.0/GdkX11-3.0.typelib
+%{_libdir}/girepository-1.0/Gtk-3.0.typelib
 
 ## XXX: just demo data - move to examples?
 %{_datadir}/gtk-3.0
