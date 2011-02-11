@@ -1,3 +1,4 @@
+# TODO: papi print backend?
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
@@ -34,7 +35,7 @@ BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gobject-introspection-devel >= 0.10.1
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
-BuildRequires:	libtool >= 1:1.4.2-9
+BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
 BuildRequires:	pango-devel >= 1:1.26.0
@@ -123,6 +124,8 @@ programlarca da kullanılmaktadır.
 Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
+Requires:	glib2 >= 1:2.28.0
+Requires:	gdk-pixbuf2 >= 2.22.0
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -144,6 +147,7 @@ Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:1.30.0
+Requires:	cairo-gobject-devel >= 1.10.0
 Requires:	gdk-pixbuf2-devel >= 2.22.0
 Requires:	glib2-devel >= 1:2.28.0
 Requires:	pango-devel >= 1:1.26.0
@@ -229,8 +233,8 @@ cp docs/reference/gtk/images/gtk-caps-lock-warning.png gtk/stock-icons/24
 %{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
 %{__aclocal} -I m4
-%{__autoheader}
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 %configure \
 	--disable-silent-rules \
