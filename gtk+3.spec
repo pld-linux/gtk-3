@@ -253,6 +253,7 @@ cp docs/reference/gtk/images/gtk-caps-lock-warning.png gtk/stock-icons/24
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/engines
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -317,7 +318,7 @@ exit 0
 %dir %{_libdir}/gtk-3.0
 %dir %{_libdir}/gtk-3.0/modules
 %dir %{_libdir}/gtk-3.0/%{abivers}
-#%dir %{_libdir}/gtk-3.0/%{abivers}/engines
+%dir %{_libdir}/gtk-3.0/%{abivers}/engines
 %dir %{_libdir}/gtk-3.0/%{abivers}/immodules
 %dir %{_libdir}/gtk-3.0/%{abivers}/printbackends
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libferret.so
