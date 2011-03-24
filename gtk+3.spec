@@ -220,6 +220,12 @@ Moduł GTK+ do drukowania przez CUPS.
 %prep
 %setup -q -n gtk+-%{version}
 
+# for packaging clean examples
+# TODO: add am patch to do it like demos/gtk-demo via some configurable dir
+# NOTE: make install so far installs only demos/gtk-demo
+install -d _examples
+cp -a demos examples _examples
+
 %build
 %{__rm} m4/introspection.m4
 %{?with_apidocs:%{__gtkdocize}}
@@ -240,20 +246,22 @@ Moduł GTK+ do drukowania przez CUPS.
 	--enable-xinput \
 	--enable-xkb \
 	--enable-xinerama
-%{__make}
+%{__make} \
+	democodedir=%{_examplesdir}/%{name}-%{version}/demos/gtk-demo
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/engines
 install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/theming-engines
 
 %{__make} install \
+	democodedir=%{_examplesdir}/%{name}-%{version}/demos/gtk-demo \
 	DESTDIR=$RPM_BUILD_ROOT
 
 touch $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
 
-cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -a _examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 # shut up check-files (static modules and *.la for modules)
 %{__rm} -r $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules/*.la \
@@ -300,7 +308,6 @@ exit 0
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
 %attr(755,root,root) %{_bindir}/gtk-query-immodules-3.0%{pqext}
-%attr(755,root,root) %{_bindir}/gtk3-demo
 %attr(755,root,root) %{_libdir}/libgailutil-3.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgailutil-3.so.0
 %attr(755,root,root) %{_libdir}/libgdk-3.so.*.*.*
@@ -335,9 +342,6 @@ exit 0
 %{_libdir}/girepository-1.0/Gdk-3.0.typelib
 %{_libdir}/girepository-1.0/GdkX11-3.0.typelib
 %{_libdir}/girepository-1.0/Gtk-3.0.typelib
-
-## XXX: just demo data - move to examples?
-%{_datadir}/gtk-3.0
 
 %dir %{_sysconfdir}/gtk-3.0
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gtk-3.0/im-multipress.conf
@@ -394,6 +398,7 @@ exit 0
 
 %files examples
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/gtk3-demo
 %{_examplesdir}/%{name}-%{version}
 
 %if %{with cups}
