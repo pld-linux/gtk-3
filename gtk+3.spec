@@ -53,6 +53,8 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
+BuildRequires:	libstdc++-devel
+BuildRequires:	sqlite3-devel
 Requires(post,postun):	glib2 >= 1:2.28.0
 Requires:	atk >= 1:1.30.0
 Requires:	cairo-gobject >= 1.10.0
