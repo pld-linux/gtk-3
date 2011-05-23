@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.0.9
+Version:	3.0.10
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.0/gtk+-%{version}.tar.bz2
-# Source0-md5:	ff6be6e773dce2853d9ff98a52ae6e76
+# Source0-md5:	3da1cb367225004f5ff186e13d096439
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
@@ -123,8 +123,8 @@ programlarca da kullanılmaktadır.
 Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
-Requires:	glib2 >= 1:2.28.0
 Requires:	gdk-pixbuf2 >= 2.22.0
+Requires:	glib2 >= 1:2.28.0
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
