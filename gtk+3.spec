@@ -59,6 +59,7 @@ Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.22.0
 Requires:	glib2 >= 1:2.28.0
 Requires:	pango >= 1:1.26.0
+Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 # evince is used as gtk-print-preview-command by default
 Suggests:	evince-backend-pdf
