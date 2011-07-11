@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.1.2
+Version:	3.1.8
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.1/gtk+-%{version}.tar.bz2
-# Source0-md5:	075220fe5770a571de04cb7640586b97
+# Source0-md5:	ee6411fe3c242db2b7d0196c45bf6e3e
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
@@ -30,7 +30,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.22.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.28.0
+BuildRequires:	glib2-devel >= 1:2.29.4
 BuildRequires:	gobject-introspection-devel >= 0.10.1
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
@@ -55,11 +55,11 @@ BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	sqlite3-devel
-Requires(post,postun):	glib2 >= 1:2.28.0
+Requires(post,postun):	glib2 >= 1:2.29.4
 Requires:	atk >= 1:1.30.0
 Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.22.0
-Requires:	glib2 >= 1:2.28.0
+Requires:	glib2 >= 1:2.29.4
 Requires:	pango >= 1:1.26.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 # evince is used as gtk-print-preview-command by default
