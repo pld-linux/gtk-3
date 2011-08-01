@@ -277,7 +277,7 @@ mv $RPM_BUILD_ROOT%{_bindir}/gtk-query-immodules-3.0{,%{pqext}}
 %endif
 
 # unsupported by glibc
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{az_IR,io,kg}
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{az_IR,io}
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
