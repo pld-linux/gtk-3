@@ -14,21 +14,22 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.1.10
+Version:	3.1.12
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.1/gtk+-%{version}.tar.bz2
-# Source0-md5:	550f4d12301c4913d7e220128b2a6b68
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.1/gtk+-%{version}.tar.xz
+# Source0-md5:	cef16e91eb6fa4edd61a892091d15460
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-gobject-devel >= 1.10.0
+BuildRequires:	colord-devel >= 0.1.9
 %{?with_cups:BuildRequires:	cups-devel}
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
-BuildRequires:	gdk-pixbuf2-devel >= 2.22.0
+BuildRequires:	gdk-pixbuf2-devel >= 2.23.5
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.29.14
 BuildRequires:	gobject-introspection-devel >= 0.10.1
@@ -37,7 +38,7 @@ BuildRequires:	gtk-doc-automake >= 1.11
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
-BuildRequires:	pango-devel >= 1:1.26.0
+BuildRequires:	pango-devel >= 1:1.29.0
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-pythonprov
@@ -55,12 +56,14 @@ BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	sqlite3-devel
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.29.14
 Requires:	atk >= 1:1.30.0
 Requires:	cairo-gobject >= 1.10.0
-Requires:	gdk-pixbuf2 >= 2.22.0
+Requires:	gdk-pixbuf2 >= 2.23.5
 Requires:	glib2 >= 1:2.29.14
-Requires:	pango >= 1:1.26.0
+Requires:	pango >= 1:1.29.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 # evince is used as gtk-print-preview-command by default
 Suggests:	evince-backend-pdf
@@ -149,9 +152,9 @@ Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:1.30.0
 Requires:	cairo-gobject-devel >= 1.10.0
-Requires:	gdk-pixbuf2-devel >= 2.22.0
+Requires:	gdk-pixbuf2-devel >= 2.23.5
 Requires:	glib2-devel >= 1:2.29.14
-Requires:	pango-devel >= 1:1.26.0
+Requires:	pango-devel >= 1:1.29.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
 Requires:	xorg-lib-libXcomposite-devel
@@ -229,7 +232,6 @@ install -d _examples
 cp -a demos examples _examples
 
 %build
-%{__rm} m4/introspection.m4
 %{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
 %{__aclocal} -I m4
