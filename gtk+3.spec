@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.1.12
+Version:	3.1.16
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.1/gtk+-%{version}.tar.xz
-# Source0-md5:	cef16e91eb6fa4edd61a892091d15460
+# Source0-md5:	22f9142e3f723cf4e1cd36384d973ffa
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:1.30.0
 BuildRequires:	autoconf >= 2.62
@@ -31,7 +31,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.23.5
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.29.14
+BuildRequires:	glib2-devel >= 1:2.29.18
 BuildRequires:	gobject-introspection-devel >= 0.10.1
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
@@ -62,7 +62,7 @@ Requires(post,postun):	glib2 >= 1:2.29.14
 Requires:	atk >= 1:1.30.0
 Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.23.5
-Requires:	glib2 >= 1:2.29.14
+Requires:	glib2 >= 1:2.29.18
 Requires:	pango >= 1:1.29.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 # evince is used as gtk-print-preview-command by default
@@ -128,7 +128,7 @@ programlarca da kullanılmaktadır.
 Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
-Requires:	glib2 >= 1:2.29.14
+Requires:	glib2 >= 1:2.29.18
 Requires:	gdk-pixbuf2 >= 2.22.0
 
 %description -n gtk-update-icon-cache
@@ -153,7 +153,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:1.30.0
 Requires:	cairo-gobject-devel >= 1.10.0
 Requires:	gdk-pixbuf2-devel >= 2.23.5
-Requires:	glib2-devel >= 1:2.29.14
+Requires:	glib2-devel >= 1:2.29.18
 Requires:	pango-devel >= 1:1.29.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
