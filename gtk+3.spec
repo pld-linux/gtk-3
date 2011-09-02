@@ -21,7 +21,7 @@ Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.1/gtk+-%{version}.tar.xz
 # Source0-md5:	22f9142e3f723cf4e1cd36384d973ffa
 URL:		http://www.gtk.org/
-BuildRequires:	atk-devel >= 1:1.30.0
+BuildRequires:	atk-devel >= 1:2.1.5
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-gobject-devel >= 1.10.0
