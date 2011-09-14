@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.1.16
+Version:	3.1.90
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.1/gtk+-%{version}.tar.xz
-# Source0-md5:	22f9142e3f723cf4e1cd36384d973ffa
+# Source0-md5:	f184e7eab6b8a3be09333049752ad277
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:2.1.5
 BuildRequires:	autoconf >= 2.62
