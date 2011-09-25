@@ -15,7 +15,7 @@ Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
 Version:	3.1.92
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.1/gtk+-%{version}.tar.xz
@@ -263,6 +263,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/theming-engines
 	DESTDIR=$RPM_BUILD_ROOT
 
 touch $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
+install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -a _examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
@@ -318,6 +319,7 @@ exit 0
 %attr(755,root,root) %ghost %{_libdir}/libgtk-3.so.0
 
 %dir %{_libdir}/gtk-3.0
+%dir %{_libdir}/gtk-3.0/modules
 %dir %{_libdir}/gtk-3.0/%{abivers}
 %dir %{_libdir}/gtk-3.0/%{abivers}/engines
 %dir %{_libdir}/gtk-3.0/%{abivers}/theming-engines
