@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.1.92
-Release:	2
+Version:	3.2.0
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.1/gtk+-%{version}.tar.xz
-# Source0-md5:	5562bcce38026c5ea33831514cb82fe9
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.2/gtk+-%{version}.tar.xz
+# Source0-md5:	4f9816f3436ffa3bb885e14354b1fd6c
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:2.1.5
 BuildRequires:	autoconf >= 2.62
@@ -59,7 +59,7 @@ BuildRequires:	sqlite3-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.29.14
-Requires:	atk >= 1:1.30.0
+Requires:	atk >= 1:2.1.5
 Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.23.5
 Requires:	glib2 >= 1:2.29.18
@@ -150,7 +150,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do GTK+
 Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	atk-devel >= 1:1.30.0
+Requires:	atk-devel >= 1:2.1.5
 Requires:	cairo-gobject-devel >= 1.10.0
 Requires:	gdk-pixbuf2-devel >= 2.23.5
 Requires:	glib2-devel >= 1:2.29.18
