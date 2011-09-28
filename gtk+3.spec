@@ -14,30 +14,31 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.0.12
+Version:	3.2.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.0/gtk+-%{version}.tar.bz2
-# Source0-md5:	0e0356052ae8578c8c0693a7690d1c4f
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.2/gtk+-%{version}.tar.xz
+# Source0-md5:	4f9816f3436ffa3bb885e14354b1fd6c
 URL:		http://www.gtk.org/
-BuildRequires:	atk-devel >= 1:1.30.0
+BuildRequires:	atk-devel >= 1:2.1.5
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-gobject-devel >= 1.10.0
+BuildRequires:	colord-devel >= 0.1.9
 %{?with_cups:BuildRequires:	cups-devel}
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
-BuildRequires:	gdk-pixbuf2-devel >= 2.22.0
+BuildRequires:	gdk-pixbuf2-devel >= 2.23.5
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.28.0
+BuildRequires:	glib2-devel >= 1:2.29.18
 BuildRequires:	gobject-introspection-devel >= 0.10.1
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
-BuildRequires:	pango-devel >= 1:1.26.0
+BuildRequires:	pango-devel >= 1:1.29.0
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-pythonprov
@@ -53,12 +54,16 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
-Requires(post,postun):	glib2 >= 1:2.28.0
-Requires:	atk >= 1:1.30.0
+BuildRequires:	libstdc++-devel
+BuildRequires:	sqlite3-devel
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
+Requires(post,postun):	glib2 >= 1:2.29.14
+Requires:	atk >= 1:2.1.5
 Requires:	cairo-gobject >= 1.10.0
-Requires:	gdk-pixbuf2 >= 2.22.0
-Requires:	glib2 >= 1:2.28.0
-Requires:	pango >= 1:1.26.0
+Requires:	gdk-pixbuf2 >= 2.23.5
+Requires:	glib2 >= 1:2.29.18
+Requires:	pango >= 1:1.29.0
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 # evince is used as gtk-print-preview-command by default
@@ -125,7 +130,7 @@ Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
 Requires:	gdk-pixbuf2 >= 2.22.0
-Requires:	glib2 >= 1:2.28.0
+Requires:	glib2 >= 1:2.29.18
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -146,11 +151,11 @@ Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do GTK+
 Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	atk-devel >= 1:1.30.0
+Requires:	atk-devel >= 1:2.1.5
 Requires:	cairo-gobject-devel >= 1.10.0
-Requires:	gdk-pixbuf2-devel >= 2.22.0
-Requires:	glib2-devel >= 1:2.28.0
-Requires:	pango-devel >= 1:1.26.0
+Requires:	gdk-pixbuf2-devel >= 2.23.5
+Requires:	glib2-devel >= 1:2.29.18
+Requires:	pango-devel >= 1:1.29.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
 Requires:	xorg-lib-libXcomposite-devel
@@ -228,7 +233,6 @@ install -d _examples
 cp -a demos examples _examples
 
 %build
-%{__rm} m4/introspection.m4
 %{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
 %{__aclocal} -I m4
@@ -260,13 +264,12 @@ install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/theming-engines
 	DESTDIR=$RPM_BUILD_ROOT
 
 touch $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
+install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -a _examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 # shut up check-files (static modules and *.la for modules)
-%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules/*.la \
-	%{?with_static_libs:$RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules/*.a}
 %{__rm} -r $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/*/*.la \
 	%{?with_static_libs:$RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/*/*.a}
 
@@ -323,10 +326,7 @@ exit 0
 %dir %{_libdir}/gtk-3.0/%{abivers}/theming-engines
 %dir %{_libdir}/gtk-3.0/%{abivers}/immodules
 %dir %{_libdir}/gtk-3.0/%{abivers}/printbackends
-%attr(755,root,root) %{_libdir}/gtk-3.0/modules/libferret.so
-%attr(755,root,root) %{_libdir}/gtk-3.0/modules/libgail.so
 %ghost %{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
-#%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/engines/libpixmap.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-file.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-lpr.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-am-et.so
