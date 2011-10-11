@@ -129,7 +129,7 @@ programlarca da kullanılmaktadır.
 Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
-Requires:	gdk-pixbuf2 >= 2.22.0
+Requires:	gdk-pixbuf2 >= 2.23.5
 Requires:	glib2 >= 1:2.29.18
 
 %description -n gtk-update-icon-cache
