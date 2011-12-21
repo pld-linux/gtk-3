@@ -14,13 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.2.2
-Release:	2
+Version:	3.2.3
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.2/gtk+-%{version}.tar.xz
-# Source0-md5:	447e4f452eff459b81c1591a0adfd791
-Patch0:		%{name}-cups-auth.patch
+# Source0-md5:	b4edcc69e39159dd7be17828249afb46
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:2.1.5
 BuildRequires:	autoconf >= 2.62
@@ -226,7 +225,6 @@ Moduł GTK+ do drukowania przez CUPS.
 
 %prep
 %setup -q -n gtk+-%{version}
-%patch0 -p1
 
 # for packaging clean examples
 # TODO: add am patch to do it like demos/gtk-demo via some configurable dir
