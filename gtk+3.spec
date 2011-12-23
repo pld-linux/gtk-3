@@ -1,8 +1,8 @@
-# TODO: papi print backend?
 #
 # Conditional build:
 %bcond_without	apidocs		# disable gtk-doc
 %bcond_without	cups		# disable CUPS support
+%bcond_without	papi		# disable PAPI support
 %bcond_without	static_libs	# don't build static library
 #
 Summary:	The GIMP Toolkit
@@ -20,13 +20,16 @@ License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.2/gtk+-%{version}.tar.xz
 # Source0-md5:	b4edcc69e39159dd7be17828249afb46
+Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:2.1.5
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-gobject-devel >= 1.10.0
 BuildRequires:	colord-devel >= 0.1.9
-%{?with_cups:BuildRequires:	cups-devel}
+%if %{with cups} || %{with papi}
+BuildRequires:	cups-devel
+%endif
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.23.5
@@ -39,6 +42,7 @@ BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
 BuildRequires:	pango-devel >= 1:1.29.0
+%{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-pythonprov
@@ -223,8 +227,22 @@ CUPS printing module for GTK+.
 %description cups -l pl.UTF-8
 Moduł GTK+ do drukowania przez CUPS.
 
+%package papi
+Summary:	PAPI printing module for GTK+
+Summary(pl.UTF-8):	Moduł GTK+ do drukowania przez PAPI
+Group:		X11/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	papi
+
+%description papi
+PAPI printing module for GTK+.
+
+%description papi -l pl.UTF-8
+Moduł GTK+ do drukowania przez PAPI.
+
 %prep
 %setup -q -n gtk+-%{version}
+%patch0 -p1
 
 # for packaging clean examples
 # TODO: add am patch to do it like demos/gtk-demo via some configurable dir
@@ -233,6 +251,7 @@ install -d _examples
 cp -a demos examples _examples
 
 %build
+CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 %{?with_apidocs:%{__gtkdocize}}
 %{__libtoolize}
 %{__aclocal} -I m4
@@ -242,6 +261,7 @@ cp -a demos examples _examples
 %configure \
 	--disable-silent-rules \
 	%{__disable cups} \
+	%{!?with_papi:--disable-papi} \
 	%{?debug:--enable-debug=yes} \
 	%{__enable_disable apidocs gtk-doc} \
 	--enable-man \
@@ -406,4 +426,10 @@ exit 0
 %files cups
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-cups.so
+%endif
+
+%if %{with papi}
+%files papi
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-papi.so
 %endif
