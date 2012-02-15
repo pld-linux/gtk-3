@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.3.12
+Version:	3.3.14
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.3/gtk+-%{version}.tar.xz
-# Source0-md5:	8291bbee90f79f77816cd423506cdb16
+# Source0-md5:	e7f9665d0ccf888cb657a79911b5ecae
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:2.1.5
@@ -32,9 +32,9 @@ BuildRequires:	cups-devel
 %endif
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
-BuildRequires:	gdk-pixbuf2-devel >= 2.23.5
+BuildRequires:	gdk-pixbuf2-devel >= 2.25.2
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.31.13
+BuildRequires:	glib2-devel >= 1:2.31.14
 BuildRequires:	gobject-introspection-devel >= 0.10.1
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
@@ -65,8 +65,8 @@ BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.31.13
 Requires:	atk >= 1:2.1.5
 Requires:	cairo-gobject >= 1.10.0
-Requires:	gdk-pixbuf2 >= 2.23.5
-Requires:	glib2 >= 1:2.31.13
+Requires:	gdk-pixbuf2 >= 2.25.2
+Requires:	glib2 >= 1:2.31.14
 Requires:	pango >= 1:1.29.0
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
@@ -133,8 +133,8 @@ programlarca da kullanılmaktadır.
 Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
-Requires:	gdk-pixbuf2 >= 2.23.5
-Requires:	glib2 >= 1:2.29.18
+Requires:	gdk-pixbuf2 >= 2.25.2
+Requires:	glib2 >= 1:2.31.14
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -157,8 +157,8 @@ Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:2.1.5
 Requires:	cairo-gobject-devel >= 1.10.0
-Requires:	gdk-pixbuf2-devel >= 2.23.5
-Requires:	glib2-devel >= 1:2.31.13
+Requires:	gdk-pixbuf2-devel >= 2.25.2
+Requires:	glib2-devel >= 1:2.31.14
 Requires:	pango-devel >= 1:1.29.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
@@ -207,7 +207,7 @@ Dokumentacja API GTK+.
 Summary:	GTK+ - example programs
 Summary(pl.UTF-8):	GTK+ - programy przykładowe
 Group:		X11/Development/Libraries
-Requires(post,postun):	glib2 >= 1:2.26.0
+Requires(post,postun):	glib2 >= 1:2.31.14
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description examples
