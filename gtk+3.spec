@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.3.14
+Version:	3.3.16
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.3/gtk+-%{version}.tar.xz
-# Source0-md5:	e7f9665d0ccf888cb657a79911b5ecae
+# Source0-md5:	489706f7f15268e7ce8ec32dddc3874c
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:2.1.5
@@ -373,15 +373,13 @@ exit 0
 
 %dir %{_sysconfdir}/gtk-3.0
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gtk-3.0/im-multipress.conf
+%{_datadir}/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 %dir %{_datadir}/themes/Default/gtk-3.0
 %{_datadir}/themes/Default/gtk-3.0/gtk-keys.css
 %dir %{_datadir}/themes/Emacs
 %dir %{_datadir}/themes/Emacs/gtk-3.0
 %{_datadir}/themes/Emacs/gtk-3.0/gtk-keys.css
-%dir %{_datadir}/themes/Raleigh
-%dir %{_datadir}/themes/Raleigh/gtk-3.0
-%{_datadir}/themes/Raleigh/gtk-3.0/gtk.css
 %{_mandir}/man1/gtk-query-immodules-3.0.1*
 
 %files -n gtk-update-icon-cache
@@ -429,6 +427,7 @@ exit 0
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gtk3-demo
 %attr(755,root,root) %{_bindir}/gtk3-demo-application
+%attr(755,root,root) %{_bindir}/gtk3-widget-factory
 %{_datadir}/glib-2.0/schemas/org.gtk.Demo.gschema.xml
 %{_examplesdir}/%{name}-%{version}
 
