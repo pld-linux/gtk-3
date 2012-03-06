@@ -14,7 +14,7 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.3.16
+Version:	3.3.18
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
