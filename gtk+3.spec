@@ -14,7 +14,7 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.3.18
+Version:	3.3.20
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
@@ -28,13 +28,13 @@ BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-gobject-devel >= 1.10.0
 BuildRequires:	colord-devel >= 0.1.9
 %if %{with cups} || %{with papi}
-BuildRequires:	cups-devel
+BuildRequires:	cups-devel >= 1:1.2
 %endif
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
-BuildRequires:	gdk-pixbuf2-devel >= 2.25.2
+BuildRequires:	gdk-pixbuf2-devel >= 2.26.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.31.14
+BuildRequires:	glib2-devel >= 1:2.31.20
 BuildRequires:	gobject-introspection-devel >= 0.10.1
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
@@ -65,8 +65,8 @@ BuildRequires:	xz
 Requires(post,postun):	glib2 >= 1:2.31.13
 Requires:	atk >= 1:2.1.5
 Requires:	cairo-gobject >= 1.10.0
-Requires:	gdk-pixbuf2 >= 2.25.2
-Requires:	glib2 >= 1:2.31.14
+Requires:	gdk-pixbuf2 >= 2.26.0
+Requires:	glib2 >= 1:2.31.20
 Requires:	pango >= 1:1.29.0
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
@@ -133,8 +133,8 @@ programlarca da kullanılmaktadır.
 Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
-Requires:	gdk-pixbuf2 >= 2.25.2
-Requires:	glib2 >= 1:2.31.14
+Requires:	gdk-pixbuf2 >= 2.26.0
+Requires:	glib2 >= 1:2.31.20
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -157,8 +157,8 @@ Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:2.1.5
 Requires:	cairo-gobject-devel >= 1.10.0
-Requires:	gdk-pixbuf2-devel >= 2.25.2
-Requires:	glib2-devel >= 1:2.31.14
+Requires:	gdk-pixbuf2-devel >= 2.26.0
+Requires:	glib2-devel >= 1:2.31.20
 Requires:	pango-devel >= 1:1.29.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
@@ -269,7 +269,6 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 	%{__enable_disable static_libs static} \
 	--enable-x11-backend \
 	--with-html-dir=%{_gtkdocdir} \
-	--enable-xinput \
 	--enable-xkb \
 	--enable-xinerama
 %{__make} \
