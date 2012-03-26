@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.2.4
+Version:	3.4.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.2/gtk+-%{version}.tar.xz
-# Source0-md5:	3fe73e4af079b7e891ca417faed71139
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.4/gtk+-%{version}.tar.xz
+# Source0-md5:	f9a0bc875cf95c0462910d2d32528464
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:2.1.5
@@ -28,16 +28,17 @@ BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-gobject-devel >= 1.10.0
 BuildRequires:	colord-devel >= 0.1.9
 %if %{with cups} || %{with papi}
-BuildRequires:	cups-devel
+BuildRequires:	cups-devel >= 1:1.2
 %endif
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
-BuildRequires:	gdk-pixbuf2-devel >= 2.23.5
+BuildRequires:	gdk-pixbuf2-devel >= 2.26.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.29.18
+BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gobject-introspection-devel >= 0.10.1
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
@@ -47,6 +48,8 @@ BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.592
+BuildRequires:	sqlite3-devel
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcomposite-devel
 BuildRequires:	xorg-lib-libXcursor-devel
@@ -58,15 +61,12 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
-BuildRequires:	libstdc++-devel
-BuildRequires:	sqlite3-devel
-BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.29.14
+Requires(post,postun):	glib2 >= 1:2.31.13
 Requires:	atk >= 1:2.1.5
 Requires:	cairo-gobject >= 1.10.0
-Requires:	gdk-pixbuf2 >= 2.23.5
-Requires:	glib2 >= 1:2.29.18
+Requires:	gdk-pixbuf2 >= 2.26.0
+Requires:	glib2 >= 1:2.32.0
 Requires:	pango >= 1:1.29.0
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
@@ -133,8 +133,8 @@ programlarca da kullanılmaktadır.
 Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
-Requires:	gdk-pixbuf2 >= 2.23.5
-Requires:	glib2 >= 1:2.29.18
+Requires:	gdk-pixbuf2 >= 2.26.0
+Requires:	glib2 >= 1:2.32.0
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -157,8 +157,8 @@ Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:2.1.5
 Requires:	cairo-gobject-devel >= 1.10.0
-Requires:	gdk-pixbuf2-devel >= 2.23.5
-Requires:	glib2-devel >= 1:2.29.18
+Requires:	gdk-pixbuf2-devel >= 2.26.0
+Requires:	glib2-devel >= 1:2.32.0
 Requires:	pango-devel >= 1:1.29.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
@@ -207,6 +207,7 @@ Dokumentacja API GTK+.
 Summary:	GTK+ - example programs
 Summary(pl.UTF-8):	GTK+ - programy przykładowe
 Group:		X11/Development/Libraries
+Requires(post,postun):	glib2 >= 1:2.32.0
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description examples
@@ -268,7 +269,6 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 	%{__enable_disable static_libs static} \
 	--enable-x11-backend \
 	--with-html-dir=%{_gtkdocdir} \
-	--enable-xinput \
 	--enable-xkb \
 	--enable-xinerama
 %{__make} \
@@ -328,6 +328,12 @@ else
 fi
 exit 0
 
+%post examples
+%glib_compile_schemas
+
+%postun examples
+%glib_compile_schemas
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
@@ -366,15 +372,13 @@ exit 0
 
 %dir %{_sysconfdir}/gtk-3.0
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gtk-3.0/im-multipress.conf
+%{_datadir}/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 %dir %{_datadir}/themes/Default/gtk-3.0
 %{_datadir}/themes/Default/gtk-3.0/gtk-keys.css
 %dir %{_datadir}/themes/Emacs
 %dir %{_datadir}/themes/Emacs/gtk-3.0
 %{_datadir}/themes/Emacs/gtk-3.0/gtk-keys.css
-%dir %{_datadir}/themes/Raleigh
-%dir %{_datadir}/themes/Raleigh/gtk-3.0
-%{_datadir}/themes/Raleigh/gtk-3.0/gtk.css
 %{_mandir}/man1/gtk-query-immodules-3.0.1*
 
 %files -n gtk-update-icon-cache
@@ -397,6 +401,7 @@ exit 0
 %{_pkgconfigdir}/gtk+-3.0.pc
 %{_pkgconfigdir}/gtk+-unix-print-3.0.pc
 %{_pkgconfigdir}/gtk+-x11-3.0.pc
+%{_datadir}/gtk-3.0
 %{_datadir}/gir-1.0/Gdk-3.0.gir
 %{_datadir}/gir-1.0/GdkX11-3.0.gir
 %{_datadir}/gir-1.0/Gtk-3.0.gir
@@ -420,6 +425,9 @@ exit 0
 %files examples
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gtk3-demo
+%attr(755,root,root) %{_bindir}/gtk3-demo-application
+%attr(755,root,root) %{_bindir}/gtk3-widget-factory
+%{_datadir}/glib-2.0/schemas/org.gtk.Demo.gschema.xml
 %{_examplesdir}/%{name}-%{version}
 
 %if %{with cups}
