@@ -62,7 +62,7 @@ BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
-Requires(post,postun):	glib2 >= 1:2.31.13
+Requires(post,postun):	glib2 >= 1:2.32.0
 Requires:	atk >= 1:2.1.5
 Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.26.0
