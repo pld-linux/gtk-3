@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.4.0
-Release:	2
+Version:	3.4.1
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.4/gtk+-%{version}.tar.xz
-# Source0-md5:	f9a0bc875cf95c0462910d2d32528464
+# Source0-md5:	2cbf02394c2c42cc597405eadabcac3e
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:2.1.5
@@ -34,7 +34,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.26.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.32.0
+BuildRequires:	glib2-devel >= 1:2.32.1
 BuildRequires:	gobject-introspection-devel >= 0.10.1
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
 BuildRequires:	gtk-doc-automake >= 1.11
@@ -66,7 +66,7 @@ Requires(post,postun):	glib2 >= 1:2.32.0
 Requires:	atk >= 1:2.1.5
 Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.26.0
-Requires:	glib2 >= 1:2.32.0
+Requires:	glib2 >= 1:2.32.1
 Requires:	pango >= 1:1.29.0
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
@@ -134,7 +134,7 @@ Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
 Requires:	gdk-pixbuf2 >= 2.26.0
-Requires:	glib2 >= 1:2.32.0
+Requires:	glib2 >= 1:2.32.1
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -158,7 +158,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:2.1.5
 Requires:	cairo-gobject-devel >= 1.10.0
 Requires:	gdk-pixbuf2-devel >= 2.26.0
-Requires:	glib2-devel >= 1:2.32.0
+Requires:	glib2-devel >= 1:2.32.1
 Requires:	pango-devel >= 1:1.29.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
@@ -207,7 +207,7 @@ Dokumentacja API GTK+.
 Summary:	GTK+ - example programs
 Summary(pl.UTF-8):	GTK+ - programy przykładowe
 Group:		X11/Development/Libraries
-Requires(post,postun):	glib2 >= 1:2.32.0
+Requires(post,postun):	glib2 >= 1:2.32.1
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description examples
