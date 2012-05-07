@@ -14,12 +14,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.4.1
+Version:	3.4.2
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.4/gtk+-%{version}.tar.xz
-# Source0-md5:	2cbf02394c2c42cc597405eadabcac3e
+# Source0-md5:	9e20443fbaa3ba3e9cbd2fc44d6be121
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	atk-devel >= 1:2.1.5
@@ -300,7 +300,7 @@ mv $RPM_BUILD_ROOT%{_bindir}/gtk-query-immodules-3.0{,%{pqext}}
 %endif
 
 # unsupported by glibc
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{az_IR,io}
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{az_IR,io}
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
