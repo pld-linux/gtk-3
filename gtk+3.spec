@@ -4,7 +4,7 @@
 %bcond_without	cups		# disable CUPS support
 %bcond_without	papi		# disable PAPI support
 %bcond_without	static_libs	# don't build static library
-#
+
 Summary:	The GIMP Toolkit
 Summary(cs.UTF-8):	Sada nástrojů pro GIMP
 Summary(de.UTF-8):	Der GIMP-Toolkit
@@ -15,7 +15,7 @@ Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
 Version:	3.4.4
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.4/gtk+-%{version}.tar.xz
@@ -50,7 +50,7 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	sqlite3-devel
 BuildRequires:	tar >= 1:1.22
-BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libX11-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXcomposite-devel
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXdamage-devel
@@ -62,6 +62,7 @@ BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
+Requires:	xorg-lib-libX11 >= 1.5.0
 Requires(post,postun):	glib2 >= 1:2.32.0
 Requires:	atk >= 1:2.1.5
 Requires:	cairo-gobject >= 1.10.0
