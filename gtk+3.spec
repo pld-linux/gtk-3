@@ -14,15 +14,16 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.4.4
-Release:	2
+Version:	3.5.12
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.4/gtk+-%{version}.tar.xz
-# Source0-md5:	1b2cf29502a6394e8d4b30f7f5bb9131
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.5/gtk+-%{version}.tar.xz
+# Source0-md5:	597817133e41e841b932a10b3a433156
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
-BuildRequires:	atk-devel >= 1:2.1.5
+BuildRequires:	at-spi2-atk-devel >= 2.5.3
+BuildRequires:	atk-devel >= 1:2.5.3
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-gobject-devel >= 1.10.0
@@ -34,10 +35,12 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.26.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.32.1
+BuildRequires:	glib2-devel >= 1:2.33.1
 BuildRequires:	gobject-introspection-devel >= 1.32.0
-%{?with_apidocs:BuildRequires:	gtk-doc >= 1.11}
+%if %{with apidocs}
+BuildRequires:	gtk-doc >= 1.11
 BuildRequires:	gtk-doc-automake >= 1.11
+%endif
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
@@ -64,11 +67,11 @@ BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
 Requires:	xorg-lib-libX11 >= 1.5.0
 Requires(post,postun):	glib2 >= 1:2.32.0
-Requires:	atk >= 1:2.1.5
+Requires:	atk >= 1:2.5.3
 Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.26.0
-Requires:	glib2 >= 1:2.32.1
-Requires:	pango >= 1:1.29.0
+Requires:	glib2 >= 1:2.33.1
+Requires:	pango >= 1:1.30.0
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 # evince is used as gtk-print-preview-command by default
@@ -135,7 +138,7 @@ Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
 Requires:	gdk-pixbuf2 >= 2.26.0
-Requires:	glib2 >= 1:2.32.1
+Requires:	glib2 >= 1:2.33.1
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -156,11 +159,11 @@ Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do GTK+
 Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	atk-devel >= 1:2.1.5
+Requires:	atk-devel >= 1:2.5.3
 Requires:	cairo-gobject-devel >= 1.10.0
 Requires:	gdk-pixbuf2-devel >= 2.26.0
-Requires:	glib2-devel >= 1:2.32.1
-Requires:	pango-devel >= 1:1.29.0
+Requires:	glib2-devel >= 1:2.33.1
+Requires:	pango-devel >= 1:1.30.0
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
 Requires:	xorg-lib-libXcomposite-devel
@@ -338,6 +341,7 @@ exit 0
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
+%attr(755,root,root) %{_bindir}/gtk-launch
 %attr(755,root,root) %{_bindir}/gtk-query-immodules-3.0%{pqext}
 %attr(755,root,root) %{_libdir}/libgailutil-3.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgailutil-3.so.0
@@ -380,6 +384,7 @@ exit 0
 %dir %{_datadir}/themes/Emacs
 %dir %{_datadir}/themes/Emacs/gtk-3.0
 %{_datadir}/themes/Emacs/gtk-3.0/gtk-keys.css
+%{_mandir}/man1/gtk-launch.1*
 %{_mandir}/man1/gtk-query-immodules-3.0.1*
 
 %files -n gtk-update-icon-cache
