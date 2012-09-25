@@ -22,8 +22,8 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.6/gtk+-%{version}.tar.xz
 # Source0-md5:	6f7ef4679f7e3622894c3f57045a1188
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
-BuildRequires:	at-spi2-atk-devel >= 2.5.3
-BuildRequires:	atk-devel >= 1:2.5.3
+BuildRequires:	at-spi2-atk-devel >= 2.6.0
+BuildRequires:	atk-devel >= 1:2.6.0
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-gobject-devel >= 1.10.0
@@ -67,7 +67,7 @@ BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
 Requires:	xorg-lib-libX11 >= 1.5.0
 Requires(post,postun):	glib2 >= 1:2.32.0
-Requires:	atk >= 1:2.5.3
+Requires:	atk >= 1:2.6.0
 Requires:	cairo-gobject >= 1.10.0
 Requires:	gdk-pixbuf2 >= 2.26.0
 Requires:	glib2 >= 1:2.33.1
@@ -159,7 +159,8 @@ Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do GTK+
 Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	atk-devel >= 1:2.5.3
+Requires:	at-spi2-atk-devel >= 2.6.0
+Requires:	atk-devel >= 1:2.6.0
 Requires:	cairo-gobject-devel >= 1.10.0
 Requires:	gdk-pixbuf2-devel >= 2.26.0
 Requires:	glib2-devel >= 1:2.33.1
