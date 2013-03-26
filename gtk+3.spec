@@ -14,16 +14,16 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.6.4
+Version:	3.8.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.6/gtk+-%{version}.tar.xz
-# Source0-md5:	123d3dc6fc659539a308017934235b3e
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.8/gtk+-%{version}.tar.xz
+# Source0-md5:	ee8042469449c2bc702dbd9fa690f405
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
-BuildRequires:	atk-devel >= 1:2.6.0
+BuildRequires:	atk-devel >= 1:2.8.0
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	cairo-gobject-devel >= 1.10.0
@@ -33,9 +33,9 @@ BuildRequires:	cups-devel >= 1:1.2
 %endif
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
-BuildRequires:	gdk-pixbuf2-devel >= 2.26.0
+BuildRequires:	gdk-pixbuf2-devel >= 2.28.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.33.1
+BuildRequires:	glib2-devel >= 1:2.36.0
 BuildRequires:	gobject-introspection-devel >= 1.32.0
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.11
@@ -45,7 +45,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
-BuildRequires:	pango-devel >= 1:1.30.0
+BuildRequires:	pango-devel >= 1:1.32.4
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
@@ -53,6 +53,7 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	sqlite3-devel
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	wayland-devel >= 1.0.0
 BuildRequires:	xorg-lib-libX11-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXcomposite-devel
 BuildRequires:	xorg-lib-libXcursor-devel
@@ -64,14 +65,15 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
+BuildRequires:	xorg-lib-libxkbcommon-devel
 BuildRequires:	xz
 Requires:	xorg-lib-libX11 >= 1.5.0
-Requires(post,postun):	glib2 >= 1:2.33.1
-Requires:	atk >= 1:2.6.0
+Requires(post,postun):	glib2 >= 1:2.36.0
+Requires:	atk >= 1:2.8.0
 Requires:	cairo-gobject >= 1.10.0
-Requires:	gdk-pixbuf2 >= 2.26.0
-Requires:	glib2 >= 1:2.33.1
-Requires:	pango >= 1:1.30.0
+Requires:	gdk-pixbuf2 >= 2.28.0
+Requires:	glib2 >= 1:2.36.0
+Requires:	pango >= 1:1.32.4
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 # evince is used as gtk-print-preview-command by default
@@ -137,8 +139,8 @@ programlarca da kullanılmaktadır.
 Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
-Requires:	gdk-pixbuf2 >= 2.26.0
-Requires:	glib2 >= 1:2.33.1
+Requires:	gdk-pixbuf2 >= 2.28.0
+Requires:	glib2 >= 1:2.36.0
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -160,11 +162,11 @@ Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	at-spi2-atk-devel >= 2.6.0
-Requires:	atk-devel >= 1:2.6.0
+Requires:	atk-devel >= 1:2.8.0
 Requires:	cairo-gobject-devel >= 1.10.0
-Requires:	gdk-pixbuf2-devel >= 2.26.0
-Requires:	glib2-devel >= 1:2.33.1
-Requires:	pango-devel >= 1:1.30.0
+Requires:	gdk-pixbuf2-devel >= 2.28.0
+Requires:	glib2-devel >= 1:2.36.0
+Requires:	pango-devel >= 1:1.32.4
 Requires:	shared-mime-info
 Requires:	xorg-lib-libX11-devel
 Requires:	xorg-lib-libXcomposite-devel
@@ -212,7 +214,7 @@ Dokumentacja API GTK+.
 Summary:	GTK+ - example programs
 Summary(pl.UTF-8):	GTK+ - programy przykładowe
 Group:		X11/Development/Libraries
-Requires(post,postun):	glib2 >= 1:2.33.1
+Requires(post,postun):	glib2 >= 1:2.36.0
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description examples
@@ -273,6 +275,8 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 	--enable-man \
 	%{__enable_disable static_libs static} \
 	--enable-x11-backend \
+	--enable-wayland-backend \
+	--enable-broadway-backend \
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-xkb \
 	--enable-xinerama
@@ -343,6 +347,7 @@ exit 0
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
+%attr(755,root,root) %{_bindir}/broadwayd
 %attr(755,root,root) %{_bindir}/gtk-launch
 %attr(755,root,root) %{_bindir}/gtk-query-immodules-3.0%{pqext}
 %attr(755,root,root) %{_libdir}/libgailutil-3.so.*.*.*
@@ -386,6 +391,7 @@ exit 0
 %dir %{_datadir}/themes/Emacs
 %dir %{_datadir}/themes/Emacs/gtk-3.0
 %{_datadir}/themes/Emacs/gtk-3.0/gtk-keys.css
+%{_mandir}/man1/broadwayd.1*
 %{_mandir}/man1/gtk-launch.1*
 %{_mandir}/man1/gtk-query-immodules-3.0.1*
 
@@ -405,9 +411,13 @@ exit 0
 %{_aclocaldir}/gtk-3.0.m4
 %{_pkgconfigdir}/gail-3.0.pc
 %{_pkgconfigdir}/gdk-3.0.pc
+%{_pkgconfigdir}/gdk-broadway-3.0.pc
+%{_pkgconfigdir}/gdk-wayland-3.0.pc
 %{_pkgconfigdir}/gdk-x11-3.0.pc
 %{_pkgconfigdir}/gtk+-3.0.pc
+%{_pkgconfigdir}/gtk+-broadway-3.0.pc
 %{_pkgconfigdir}/gtk+-unix-print-3.0.pc
+%{_pkgconfigdir}/gtk+-wayland-3.0.pc
 %{_pkgconfigdir}/gtk+-x11-3.0.pc
 %{_datadir}/gtk-3.0
 %{_datadir}/gir-1.0/Gdk-3.0.gir
