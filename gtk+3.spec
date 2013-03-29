@@ -1,9 +1,11 @@
 #
 # Conditional build:
-%bcond_without	apidocs		# disable gtk-doc
-%bcond_without	cups		# disable CUPS support
-%bcond_without	papi		# disable PAPI support
-%bcond_without	static_libs	# don't build static library
+%bcond_without	apidocs		# gtk-doc build
+%bcond_without	cups		# CUPS support module
+%bcond_without	papi		# PAPI support module
+%bcond_without	broadway	# Broadway target
+%bcond_without	wayland		# Wayland target
+%bcond_without	static_libs	# static library build
 
 Summary:	The GIMP Toolkit
 Summary(cs.UTF-8):	Sada nástrojů pro GIMP
@@ -53,7 +55,6 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	sqlite3-devel
 BuildRequires:	tar >= 1:1.22
-BuildRequires:	wayland-devel >= 1.0.0
 BuildRequires:	xorg-lib-libX11-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXcomposite-devel
 BuildRequires:	xorg-lib-libXcursor-devel
@@ -65,8 +66,13 @@ BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
 BuildRequires:	xorg-lib-libXrender-devel
-BuildRequires:	xorg-lib-libxkbcommon-devel
 BuildRequires:	xz
+%{?with_broadway:BuildRequires:	zlib-devel}
+%if %{with wayland}
+# wayland-client, wayland-cursor
+BuildRequires:	wayland-devel >= 1.0.0
+BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
+%endif
 Requires:	xorg-lib-libX11 >= 1.5.0
 Requires(post,postun):	glib2 >= 1:2.36.0
 Requires:	atk >= 1:2.8.0
@@ -76,6 +82,10 @@ Requires:	glib2 >= 1:2.36.0
 Requires:	pango >= 1:1.32.4
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
+%if %{with wayland}
+Requires:	wayland >= 1.0.0
+Requires:	xorg-lib-libxkbcommon >= 0.2.0
+%endif
 # evince is used as gtk-print-preview-command by default
 Suggests:	evince-backend-pdf
 %if %{with cups}
@@ -168,17 +178,6 @@ Requires:	gdk-pixbuf2-devel >= 2.28.0
 Requires:	glib2-devel >= 1:2.36.0
 Requires:	pango-devel >= 1:1.32.4
 Requires:	shared-mime-info
-Requires:	xorg-lib-libX11-devel
-Requires:	xorg-lib-libXcomposite-devel
-Requires:	xorg-lib-libXcursor-devel
-Requires:	xorg-lib-libXdamage-devel
-Requires:	xorg-lib-libXext-devel
-Requires:	xorg-lib-libXfixes-devel
-Requires:	xorg-lib-libXft-devel
-Requires:	xorg-lib-libXi-devel
-Requires:	xorg-lib-libXinerama-devel
-Requires:	xorg-lib-libXrandr-devel >= 1.3.0
-Requires:	xorg-lib-libXrender-devel
 
 %description devel
 Header files and development documentation for the GTK+ libraries.
@@ -274,12 +273,12 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 	%{__enable_disable apidocs gtk-doc} \
 	--enable-man \
 	%{__enable_disable static_libs static} \
+	%{?with_broadway:--enable-broadway-backend} \
+	%{?with_wayland:--enable-wayland-backend} \
 	--enable-x11-backend \
-	--enable-wayland-backend \
-	--enable-broadway-backend \
-	--with-html-dir=%{_gtkdocdir} \
+	--enable-xinerama \
 	--enable-xkb \
-	--enable-xinerama
+	--with-html-dir=%{_gtkdocdir} \
 %{__make} \
 	democodedir=%{_examplesdir}/%{name}-%{version}/demos/gtk-demo
 
@@ -347,7 +346,7 @@ exit 0
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
-%attr(755,root,root) %{_bindir}/broadwayd
+%{?with_broadway:%attr(755,root,root) %{_bindir}/broadwayd}
 %attr(755,root,root) %{_bindir}/gtk-launch
 %attr(755,root,root) %{_bindir}/gtk-query-immodules-3.0%{pqext}
 %attr(755,root,root) %{_libdir}/libgailutil-3.so.*.*.*
@@ -391,7 +390,7 @@ exit 0
 %dir %{_datadir}/themes/Emacs
 %dir %{_datadir}/themes/Emacs/gtk-3.0
 %{_datadir}/themes/Emacs/gtk-3.0/gtk-keys.css
-%{_mandir}/man1/broadwayd.1*
+%{?with_broadway:%{_mandir}/man1/broadwayd.1*}
 %{_mandir}/man1/gtk-launch.1*
 %{_mandir}/man1/gtk-query-immodules-3.0.1*
 
@@ -411,14 +410,18 @@ exit 0
 %{_aclocaldir}/gtk-3.0.m4
 %{_pkgconfigdir}/gail-3.0.pc
 %{_pkgconfigdir}/gdk-3.0.pc
-%{_pkgconfigdir}/gdk-broadway-3.0.pc
-%{_pkgconfigdir}/gdk-wayland-3.0.pc
 %{_pkgconfigdir}/gdk-x11-3.0.pc
 %{_pkgconfigdir}/gtk+-3.0.pc
-%{_pkgconfigdir}/gtk+-broadway-3.0.pc
 %{_pkgconfigdir}/gtk+-unix-print-3.0.pc
-%{_pkgconfigdir}/gtk+-wayland-3.0.pc
 %{_pkgconfigdir}/gtk+-x11-3.0.pc
+%if %{with broadway}
+%{_pkgconfigdir}/gdk-broadway-3.0.pc
+%{_pkgconfigdir}/gtk+-broadway-3.0.pc
+%endif
+%if %{with wayland}
+%{_pkgconfigdir}/gdk-wayland-3.0.pc
+%{_pkgconfigdir}/gtk+-wayland-3.0.pc
+%endif
 %{_datadir}/gtk-3.0
 %{_datadir}/gir-1.0/Gdk-3.0.gir
 %{_datadir}/gir-1.0/GdkX11-3.0.gir
