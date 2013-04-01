@@ -17,7 +17,7 @@ Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
 Version:	3.8.0
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.8/gtk+-%{version}.tar.xz
@@ -278,7 +278,8 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 	--enable-x11-backend \
 	--enable-xinerama \
 	--enable-xkb \
-	--with-html-dir=%{_gtkdocdir} \
+	--with-html-dir=%{_gtkdocdir}
+
 %{__make} \
 	democodedir=%{_examplesdir}/%{name}-%{version}/demos/gtk-demo
 
