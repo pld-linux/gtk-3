@@ -16,19 +16,19 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.8.4
+Version:	3.10.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.8/gtk+-%{version}.tar.xz
-# Source0-md5:	2b232d76c01ceb626948bcbe70b05269
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.10/gtk+-%{version}.tar.xz
+# Source0-md5:	f5148a330886b906ba0eb7842409d93f
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
 BuildRequires:	atk-devel >= 1:2.8.0
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	cairo-gobject-devel >= 1.10.0
+BuildRequires:	cairo-gobject-devel >= 1.12.0
 BuildRequires:	colord-devel >= 0.1.9
 %if %{with cups} || %{with papi}
 BuildRequires:	cups-devel >= 1:1.2
@@ -37,7 +37,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.28.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.36.0
+BuildRequires:	glib2-devel >= 1:2.38.0
 BuildRequires:	gobject-introspection-devel >= 1.32.0
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.11
@@ -70,20 +70,20 @@ BuildRequires:	xz
 %{?with_broadway:BuildRequires:	zlib-devel}
 %if %{with wayland}
 # wayland-client, wayland-cursor
-BuildRequires:	wayland-devel >= 1.0.0
+BuildRequires:	wayland-devel >= 1.2.0
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
-Requires(post,postun):	glib2 >= 1:2.36.0
+Requires(post,postun):	glib2 >= 1:2.38.0
 Requires:	atk >= 1:2.8.0
-Requires:	cairo-gobject >= 1.10.0
+Requires:	cairo-gobject >= 1.12.0
 Requires:	gdk-pixbuf2 >= 2.28.0
-Requires:	glib2 >= 1:2.36.0
+Requires:	glib2 >= 1:2.38.0
 Requires:	pango >= 1:1.32.4
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 %if %{with wayland}
-Requires:	wayland >= 1.0.0
+Requires:	wayland >= 1.2.0
 Requires:	xorg-lib-libxkbcommon >= 0.2.0
 %endif
 # evince is used as gtk-print-preview-command by default
@@ -150,7 +150,7 @@ Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
 Requires:	gdk-pixbuf2 >= 2.28.0
-Requires:	glib2 >= 1:2.36.0
+Requires:	glib2 >= 1:2.38.0
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -173,9 +173,9 @@ Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	at-spi2-atk-devel >= 2.6.0
 Requires:	atk-devel >= 1:2.8.0
-Requires:	cairo-gobject-devel >= 1.10.0
+Requires:	cairo-gobject-devel >= 1.12.0
 Requires:	gdk-pixbuf2-devel >= 2.28.0
-Requires:	glib2-devel >= 1:2.36.0
+Requires:	glib2-devel >= 1:2.38.0
 Requires:	pango-devel >= 1:1.32.4
 Requires:	shared-mime-info
 
@@ -450,6 +450,7 @@ exit 0
 %attr(755,root,root) %{_bindir}/gtk3-demo-application
 %attr(755,root,root) %{_bindir}/gtk3-widget-factory
 %{_datadir}/glib-2.0/schemas/org.gtk.Demo.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.gtk.exampleapp.gschema.xml
 %{_examplesdir}/%{name}-%{version}
 
 %if %{with cups}
