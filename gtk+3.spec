@@ -213,7 +213,7 @@ Dokumentacja API GTK+.
 Summary:	GTK+ - example programs
 Summary(pl.UTF-8):	GTK+ - programy przykładowe
 Group:		X11/Development/Libraries
-Requires(post,postun):	glib2 >= 1:2.36.0
+Requires(post,postun):	glib2 >= 1:2.38.0
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description examples
