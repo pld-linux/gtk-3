@@ -1,14 +1,5 @@
 --- gtk+-3.2.3/modules/printbackends/papi/gtkprintbackendpapi.c.orig	2011-08-16 04:04:35.000000000 +0200
 +++ gtk+-3.2.3/modules/printbackends/papi/gtkprintbackendpapi.c	2011-12-23 18:55:39.354135443 +0100
-@@ -352,7 +352,7 @@
-   const gchar *title;
-   char *prtnm = NULL;
-   GtkPrintDuplex val;
--  papi_status_t pstatus = NULL;
-+  papi_status_t pstatus = PAPI_OK;
-   papi_attribute_t **attrs = NULL;
-   papi_job_ticket_t *ticket = NULL;
-   
 @@ -378,9 +378,9 @@
    else if (val == GTK_PRINT_DUPLEX_VERTICAL)
      papiAttributeListAddString (&attrs, PAPI_ATTR_EXCL, "Duplex", "DuplexTumble");
