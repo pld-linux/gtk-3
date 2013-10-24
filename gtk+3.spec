@@ -310,7 +310,7 @@ mv $RPM_BUILD_ROOT%{_bindir}/gtk-query-immodules-3.0{,%{pqext}}
 
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/{sr@ije,sr@ijekavian}
 # unsupported by glibc
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{az_IR,io}
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/io
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
