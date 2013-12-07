@@ -16,12 +16,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.10.5
+Version:	3.10.6
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.10/gtk+-%{version}.tar.xz
-# Source0-md5:	81f0d6c91140c9d3f6128fb2edd0f501
+# Source0-md5:	a260136f4cd6d3e5745e220080653b71
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
@@ -256,6 +256,9 @@ Moduł GTK+ do drukowania przez PAPI.
 # NOTE: make install so far installs only demos/gtk-demo
 install -d _examples
 cp -a demos examples _examples
+
+# upstream used too new wayland for make dist in 3.10.6 - force regeneration
+touch gdk/wayland/protocol/gtk-shell.xml
 
 %build
 CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
