@@ -16,12 +16,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.10.7
+Version:	3.12.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.10/gtk+-%{version}.tar.xz
-# Source0-md5:	18a81944a8506231529a76bf2b68372b
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.12/gtk+-%{version}.tar.xz
+# Source0-md5:	4e493fb68cded7420a7d8bcebdf13811
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
@@ -37,12 +37,13 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.28.0
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.38.0
-BuildRequires:	gobject-introspection-devel >= 1.32.0
+BuildRequires:	glib2-devel >= 1:2.40.0
+BuildRequires:	gobject-introspection-devel >= 1.39.0
 %if %{with apidocs}
-BuildRequires:	gtk-doc >= 1.11
-BuildRequires:	gtk-doc-automake >= 1.11
+BuildRequires:	gtk-doc >= 1.20
+BuildRequires:	gtk-doc-automake >= 1.20
 %endif
+BuildRequires:	json-glib-devel >= 1.0.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
@@ -51,6 +52,8 @@ BuildRequires:	pango-devel >= 1:1.32.4
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig(json-glib-1.0)
+BuildRequires:	pkgconfig(rest-0.7)
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	sqlite3-devel
@@ -70,20 +73,20 @@ BuildRequires:	xz
 %{?with_broadway:BuildRequires:	zlib-devel}
 %if %{with wayland}
 # wayland-client, wayland-cursor
-BuildRequires:	wayland-devel >= 1.2.0
+BuildRequires:	wayland-devel >= 1.3.90
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
-Requires(post,postun):	glib2 >= 1:2.38.0
+Requires(post,postun):	glib2 >= 1:2.40.0
 Requires:	atk >= 1:2.8.0
 Requires:	cairo-gobject >= 1.12.0
 Requires:	gdk-pixbuf2 >= 2.28.0
-Requires:	glib2 >= 1:2.38.0
+Requires:	glib2 >= 1:2.40.0
 Requires:	pango >= 1:1.32.4
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 %if %{with wayland}
-Requires:	wayland >= 1.2.0
+Requires:	wayland >= 1.3.90
 Requires:	xorg-lib-libxkbcommon >= 0.2.0
 %endif
 # evince is used as gtk-print-preview-command by default
@@ -150,7 +153,7 @@ Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
 Requires:	gdk-pixbuf2 >= 2.28.0
-Requires:	glib2 >= 1:2.38.0
+Requires:	glib2 >= 1:2.40.0
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -175,7 +178,7 @@ Requires:	at-spi2-atk-devel >= 2.6.0
 Requires:	atk-devel >= 1:2.8.0
 Requires:	cairo-gobject-devel >= 1.12.0
 Requires:	gdk-pixbuf2-devel >= 2.28.0
-Requires:	glib2-devel >= 1:2.38.0
+Requires:	glib2-devel >= 1:2.40.0
 Requires:	pango-devel >= 1:1.32.4
 Requires:	shared-mime-info
 
@@ -368,9 +371,11 @@ exit 0
 %dir %{_libdir}/gtk-3.0/%{abivers}/immodules
 %dir %{_libdir}/gtk-3.0/%{abivers}/printbackends
 %ghost %{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-cloudprint.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-file.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-lpr.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-am-et.so
+%{?with_broadway:%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-broadway.so}
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-cedilla.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-cyrillic-translit.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-inuktitut.so
@@ -454,6 +459,10 @@ exit 0
 %attr(755,root,root) %{_bindir}/gtk3-widget-factory
 %{_datadir}/glib-2.0/schemas/org.gtk.Demo.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gtk.exampleapp.gschema.xml
+%{_desktopdir}/gtk3-demo.desktop
+%{_desktopdir}/gtk3-widget-factory.desktop
+%{_iconsdir}/hicolor/*/apps/gtk3-demo.png
+%{_iconsdir}/hicolor/*/apps/gtk3-widget-factory.png
 %{_examplesdir}/%{name}-%{version}
 
 %if %{with cups}
