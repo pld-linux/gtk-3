@@ -17,7 +17,7 @@ Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
 Version:	3.14.0
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.14/gtk+-%{version}.tar.xz
@@ -356,7 +356,6 @@ exit 0
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
 %{?with_broadway:%attr(755,root,root) %{_bindir}/broadwayd}
-%attr(755,root,root) %{_bindir}/gtk-encode-symbolic-svg
 %attr(755,root,root) %{_bindir}/gtk-launch
 %attr(755,root,root) %{_bindir}/gtk-query-immodules-3.0%{pqext}
 %attr(755,root,root) %{_libdir}/libgailutil-3.so.*.*.*
@@ -406,11 +405,12 @@ exit 0
 %{?with_broadway:%{_mandir}/man1/broadwayd.1*}
 %{_mandir}/man1/gtk-launch.1*
 %{_mandir}/man1/gtk-query-immodules-3.0.1*
-%{_mandir}/man1/gtk-encode-symbolic-svg.1*
 
 %files -n gtk-update-icon-cache
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/gtk-encode-symbolic-svg
 %attr(755,root,root) %{_bindir}/gtk-update-icon-cache
+%{_mandir}/man1/gtk-encode-symbolic-svg.1*
 %{_mandir}/man1/gtk-update-icon-cache.1*
 
 %files devel
