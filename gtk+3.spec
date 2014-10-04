@@ -52,7 +52,7 @@ BuildRequires:	pango-devel >= 1:1.36.7
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
-BuildRequires:	rest-devel
+BuildRequires:	rest-devel >= 0.7
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	sqlite3-devel
