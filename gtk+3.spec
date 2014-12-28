@@ -36,7 +36,7 @@ BuildRequires:	cups-devel >= 1:1.2
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.31.0
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.41.2
 BuildRequires:	gobject-introspection-devel >= 1.39.0
 %if %{with apidocs}
