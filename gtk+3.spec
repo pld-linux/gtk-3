@@ -16,19 +16,19 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.14.9
+Version:	3.16.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.14/gtk+-%{version}.tar.xz
-# Source0-md5:	40902a0b035277011095946e1c61290d
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.16/gtk+-%{version}.tar.xz
+# Source0-md5:	11c97ce2527956e0ddb5ad5b236e4572
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
-BuildRequires:	atk-devel >= 1:2.12.0
+BuildRequires:	atk-devel >= 1:2.16.0
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	cairo-gobject-devel >= 1.12.0
+BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	colord-devel >= 0.1.9
 %if %{with cups} || %{with papi}
 BuildRequires:	cups-devel >= 1:1.2
@@ -37,13 +37,14 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.31.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.41.2
+BuildRequires:	glib2-devel >= 1:2.44.0
 BuildRequires:	gobject-introspection-devel >= 1.39.0
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.20
 BuildRequires:	gtk-doc-automake >= 1.20
 %endif
 BuildRequires:	json-glib-devel >= 1.0.0
+BuildRequires:	libepoxy-devel >= 1.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
@@ -77,10 +78,11 @@ BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
 Requires(post,postun):	glib2 >= 1:2.41.2
-Requires:	atk >= 1:2.12.0
-Requires:	cairo-gobject >= 1.12.0
+Requires:	atk >= 1:2.16.0
+Requires:	cairo-gobject >= 1.14.0
 Requires:	gdk-pixbuf2 >= 2.31.0
-Requires:	glib2 >= 1:2.41.2
+Requires:	glib2 >= 1:2.44.0
+Requires:	libepoxy >= 1.0
 Requires:	pango >= 1:1.36.7
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
@@ -152,7 +154,7 @@ Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
 Requires:	gdk-pixbuf2 >= 2.31.0
-Requires:	glib2 >= 1:2.41.2
+Requires:	glib2 >= 1:2.44.0
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -174,10 +176,10 @@ Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	at-spi2-atk-devel >= 2.6.0
-Requires:	atk-devel >= 1:2.12.0
-Requires:	cairo-gobject-devel >= 1.12.0
+Requires:	atk-devel >= 1:2.16.0
+Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.31.0
-Requires:	glib2-devel >= 1:2.41.2
+Requires:	glib2-devel >= 1:2.44.0
 Requires:	pango-devel >= 1:1.36.7
 Requires:	shared-mime-info
 
@@ -218,7 +220,7 @@ Dokumentacja API GTK+.
 Summary:	GTK+ - example programs
 Summary(pl.UTF-8):	GTK+ - programy przykładowe
 Group:		X11/Development/Libraries
-Requires(post,postun):	glib2 >= 1:2.41.2
+Requires(post,postun):	glib2 >= 1:2.44.0
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description examples
@@ -468,9 +470,12 @@ exit 0
 %{_desktopdir}/gtk3-demo.desktop
 %{_desktopdir}/gtk3-icon-browser.desktop
 %{_desktopdir}/gtk3-widget-factory.desktop
+%{_iconsdir}/hicolor/*/apps/gtk3-demo-symbolic.symbolic.png
 %{_iconsdir}/hicolor/*/apps/gtk3-demo.png
+%{_iconsdir}/hicolor/*/apps/gtk3-widget-factory-symbolic.symbolic.png
 %{_iconsdir}/hicolor/*/apps/gtk3-widget-factory.png
 %{_mandir}/man1/gtk3-demo.1*
+%{_mandir}/man1/gtk3-demo-application.1*
 %{_mandir}/man1/gtk3-icon-browser.1*
 %{_mandir}/man1/gtk3-widget-factory.1*
 %{_examplesdir}/%{name}-%{version}
