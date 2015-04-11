@@ -1,9 +1,11 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# gtk-doc build
-%bcond_without	cups		# CUPS support module
-%bcond_without	papi		# PAPI support module
+%bcond_without	cloudprint	# cloudprint print backend
+%bcond_without	cups		# CUPS print backend
+%bcond_without	papi		# PAPI print backend
 %bcond_without	broadway	# Broadway target
+%bcond_with	mir		# Mir target
 %bcond_without	wayland		# Wayland target
 %bcond_without	static_libs	# static library build
 
@@ -16,12 +18,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.16.0
+Version:	3.16.1
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.16/gtk+-%{version}.tar.xz
-# Source0-md5:	11c97ce2527956e0ddb5ad5b236e4572
+# Source0-md5:	7458661889a718f93b46cb44b677cc41
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
@@ -36,24 +38,25 @@ BuildRequires:	cups-devel >= 1:1.2
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.31.0
-BuildRequires:	gettext-tools
+BuildRequires:	gettext-tools >= 0.18.3
 BuildRequires:	glib2-devel >= 1:2.44.0
 BuildRequires:	gobject-introspection-devel >= 1.39.0
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.20
 BuildRequires:	gtk-doc-automake >= 1.20
 %endif
-BuildRequires:	json-glib-devel >= 1.0.0
+%{?with_cloudprint:BuildRequires:	json-glib-devel >= 1.0}
 BuildRequires:	libepoxy-devel >= 1.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
+%{?with_mir:BuildRequires:	mir-devel >= 0.11.0}
 BuildRequires:	pango-devel >= 1:1.36.7
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
-BuildRequires:	rest-devel >= 0.7
+%{?with_cloudprint:BuildRequires:	rest-devel >= 0.7}
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	sqlite3-devel
@@ -77,7 +80,7 @@ BuildRequires:	wayland-devel >= 1.5.91
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
-Requires(post,postun):	glib2 >= 1:2.41.2
+Requires(post,postun):	glib2 >= 1:2.44.0
 Requires:	atk >= 1:2.16.0
 Requires:	cairo-gobject >= 1.14.0
 Requires:	gdk-pixbuf2 >= 2.31.0
@@ -229,6 +232,18 @@ GTK+ - example programs.
 %description examples -l pl.UTF-8
 GTK+ - przykładowe programy.
 
+%package cloudprint
+Summary:	Cloudprint printing module for GTK+
+Summary(pl.UTF-8):	Moduł GTK+ do drukowania przez Cloudprint
+Group:		X11/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description cloudprint
+Cloudprint printing module for GTK+.
+
+%description cloudprint -l pl.UTF-8
+Moduł GTK+ do drukowania przez Cloudprint.
+
 %package cups
 Summary:	CUPS printing module for GTK+
 Summary(pl.UTF-8):	Moduł GTK+ do drukowania przez CUPS
@@ -277,6 +292,7 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 %{__automake}
 %configure \
 	--disable-silent-rules \
+	%{!?with_cloudprint:--disable-cloudprint} \
 	%{__disable cups} \
 	%{!?with_papi:--disable-papi} \
 	%{?debug:--enable-debug=yes} \
@@ -284,6 +300,7 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 	--enable-man \
 	%{__enable_disable static_libs static} \
 	%{?with_broadway:--enable-broadway-backend} \
+	%{?with_mir:--enable-mir-backend} \
 	%{?with_wayland:--enable-wayland-backend} \
 	--enable-x11-backend \
 	--enable-xinerama \
@@ -375,7 +392,6 @@ exit 0
 %dir %{_libdir}/gtk-3.0/%{abivers}/immodules
 %dir %{_libdir}/gtk-3.0/%{abivers}/printbackends
 %ghost %{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
-%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-cloudprint.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-file.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-lpr.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-am-et.so
@@ -434,6 +450,10 @@ exit 0
 %{_pkgconfigdir}/gdk-broadway-3.0.pc
 %{_pkgconfigdir}/gtk+-broadway-3.0.pc
 %endif
+%if %{with mir}
+%{_pkgconfigdir}/gdk-mir-3.0.pc
+%{_pkgconfigdir}/gtk+-mir-3.0.pc
+%endif
 %if %{with wayland}
 %{_pkgconfigdir}/gdk-wayland-3.0.pc
 %{_pkgconfigdir}/gtk+-wayland-3.0.pc
@@ -479,6 +499,12 @@ exit 0
 %{_mandir}/man1/gtk3-icon-browser.1*
 %{_mandir}/man1/gtk3-widget-factory.1*
 %{_examplesdir}/%{name}-%{version}
+
+%if %{with cloudprint}
+%files cloudprint
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-cloudprint.so
+%endif
 
 %if %{with cups}
 %files cups
