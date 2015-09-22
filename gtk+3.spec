@@ -18,12 +18,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.16.6
+Version:	3.18.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.16/gtk+-%{version}.tar.xz
-# Source0-md5:	fc59e5c8b5a4585b60623dd708df400b
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.18/gtk+-%{version}.tar.xz
+# Source0-md5:	7bb716b637ab413bdefd773e520c474c
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
@@ -39,7 +39,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.31.0
 BuildRequires:	gettext-tools >= 0.18.3
-BuildRequires:	glib2-devel >= 1:2.44.0
+BuildRequires:	glib2-devel >= 1:2.46.0
 BuildRequires:	gobject-introspection-devel >= 1.39.0
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.20
@@ -52,7 +52,7 @@ BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
 %{?with_mir:BuildRequires:	mir-devel >= 0.11.0}
-BuildRequires:	pango-devel >= 1:1.36.7
+BuildRequires:	pango-devel >= 1:1.38.0
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
@@ -80,13 +80,13 @@ BuildRequires:	wayland-devel >= 1.5.91
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
-Requires(post,postun):	glib2 >= 1:2.44.0
+Requires(post,postun):	glib2 >= 1:2.46.0
 Requires:	atk >= 1:2.16.0
 Requires:	cairo-gobject >= 1.14.0
 Requires:	gdk-pixbuf2 >= 2.31.0
-Requires:	glib2 >= 1:2.44.0
+Requires:	glib2 >= 1:2.46.0
 Requires:	libepoxy >= 1.0
-Requires:	pango >= 1:1.36.7
+Requires:	pango >= 1:1.38.0
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 %if %{with wayland}
@@ -157,7 +157,7 @@ Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
 Requires:	gdk-pixbuf2 >= 2.31.0
-Requires:	glib2 >= 1:2.44.0
+Requires:	glib2 >= 1:2.46.0
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -182,8 +182,8 @@ Requires:	at-spi2-atk-devel >= 2.6.0
 Requires:	atk-devel >= 1:2.16.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.31.0
-Requires:	glib2-devel >= 1:2.44.0
-Requires:	pango-devel >= 1:1.36.7
+Requires:	glib2-devel >= 1:2.46.0
+Requires:	pango-devel >= 1:1.38.0
 Requires:	shared-mime-info
 
 %description devel
@@ -223,7 +223,7 @@ Dokumentacja API GTK+.
 Summary:	GTK+ - example programs
 Summary(pl.UTF-8):	GTK+ - programy przykładowe
 Group:		X11/Development/Libraries
-Requires(post,postun):	glib2 >= 1:2.44.0
+Requires(post,postun):	glib2 >= 1:2.46.0
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description examples
@@ -434,6 +434,7 @@ exit 0
 %files devel
 %defattr(644,root,root,755)
 %doc ChangeLog
+%attr(755,root,root) %{_bindir}/gtk-builder-tool
 %attr(755,root,root) %{_libdir}/libgailutil-3.so
 %attr(755,root,root) %{_libdir}/libgdk-3.so
 %attr(755,root,root) %{_libdir}/libgtk-3.so
@@ -462,6 +463,7 @@ exit 0
 %{_datadir}/gir-1.0/Gdk-3.0.gir
 %{_datadir}/gir-1.0/GdkX11-3.0.gir
 %{_datadir}/gir-1.0/Gtk-3.0.gir
+%{_mandir}/man1/gtk-builder-tool.1*
 
 %if %{with static_libs}
 %files static
