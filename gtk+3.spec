@@ -18,12 +18,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.18.9
+Version:	3.20.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.18/gtk+-%{version}.tar.xz
-# Source0-md5:	c7a5b21d28572bb1d6fc8803864618c0
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.20/gtk+-%{version}.tar.xz
+# Source0-md5:	87849b2f47be672c109863c0022ba825
 Patch0:		%{name}-papi.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
@@ -76,7 +76,8 @@ BuildRequires:	xz
 %{?with_broadway:BuildRequires:	zlib-devel}
 %if %{with wayland}
 # wayland-client, wayland-cursor
-BuildRequires:	wayland-devel >= 1.5.91
+BuildRequires:	wayland-devel >= 1.9.91
+BuildRequires:	wayland-protocols >= 1.2
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
@@ -90,7 +91,7 @@ Requires:	pango >= 1:1.38.0
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.3.0
 %if %{with wayland}
-Requires:	wayland >= 1.5.91
+Requires:	wayland >= 1.9.91
 Requires:	xorg-lib-libxkbcommon >= 0.2.0
 %endif
 # evince is used as gtk-print-preview-command by default
@@ -435,6 +436,7 @@ exit 0
 %defattr(644,root,root,755)
 %doc ChangeLog
 %attr(755,root,root) %{_bindir}/gtk-builder-tool
+%attr(755,root,root) %{_bindir}/gtk-query-settings
 %attr(755,root,root) %{_libdir}/libgailutil-3.so
 %attr(755,root,root) %{_libdir}/libgdk-3.so
 %attr(755,root,root) %{_libdir}/libgtk-3.so
@@ -459,11 +461,14 @@ exit 0
 %{_pkgconfigdir}/gdk-wayland-3.0.pc
 %{_pkgconfigdir}/gtk+-wayland-3.0.pc
 %endif
+%{_datadir}/gettext/its/gtkbuilder.its
+%{_datadir}/gettext/its/gtkbuilder.loc
 %{_datadir}/gtk-3.0
 %{_datadir}/gir-1.0/Gdk-3.0.gir
 %{_datadir}/gir-1.0/GdkX11-3.0.gir
 %{_datadir}/gir-1.0/Gtk-3.0.gir
 %{_mandir}/man1/gtk-builder-tool.1*
+%{_mandir}/man1/gtk-query-settings.1*
 
 %if %{with static_libs}
 %files static
