@@ -30,6 +30,7 @@ BuildRequires:	at-spi2-atk-devel >= 2.6.0
 BuildRequires:	atk-devel >= 1:2.16.0
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
+# cairo-gobject + cairo-pdf,cairo-ps,cairo-svg
 BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	colord-devel >= 0.1.9
 %if %{with cups} || %{with papi}
@@ -51,7 +52,8 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
-%{?with_mir:BuildRequires:	mir-devel >= 0.11.0}
+# mirclient >= 0.11.0, mircookie >= 0.17.0
+%{?with_mir:BuildRequires:	mir-devel >= 0.17.0}
 BuildRequires:	pango-devel >= 1:1.38.0
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
@@ -75,7 +77,8 @@ BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
 %{?with_broadway:BuildRequires:	zlib-devel}
 %if %{with wayland}
-# wayland-client, wayland-cursor
+BuildRequires:	Mesa-libwayland-egl-devel
+# wayland-client, wayland-cursor, wayland-scanner
 BuildRequires:	wayland-devel >= 1.9.91
 BuildRequires:	wayland-protocols >= 1.2
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
