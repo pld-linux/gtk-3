@@ -39,7 +39,7 @@ BuildRequires:	cups-devel >= 1:1.2
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gdk-pixbuf2-devel >= 2.31.0
-BuildRequires:	gettext-tools >= 0.18.3
+BuildRequires:	gettext-tools >= 0.19.7
 BuildRequires:	glib2-devel >= 1:2.50.0
 BuildRequires:	gobject-introspection-devel >= 1.39.0
 %if %{with apidocs}
@@ -53,8 +53,8 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
-# mirclient >= 0.11.0, mircookie >= 0.17.0
-%{?with_mir:BuildRequires:	mir-devel >= 0.17.0}
+# mirclient >= 0.22.0, mircookie >= 0.17.0
+%{?with_mir:BuildRequires:	mir-devel >= 0.22.0}
 BuildRequires:	pango-devel >= 1:1.38.0
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
@@ -73,7 +73,7 @@ BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXft-devel
 BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXinerama-devel
-BuildRequires:	xorg-lib-libXrandr-devel >= 1.3.0
+BuildRequires:	xorg-lib-libXrandr-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
 %{?with_broadway:BuildRequires:	zlib-devel}
@@ -85,7 +85,7 @@ BuildRequires:	wayland-protocols >= 1.7
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
-Requires(post,postun):	glib2 >= 1:2.46.0
+Requires(post,postun):	glib2 >= 1:2.50.0
 Requires:	atk >= 1:2.16.0
 Requires:	cairo-gobject >= 1.14.0
 Requires:	gdk-pixbuf2 >= 2.31.0
@@ -93,7 +93,7 @@ Requires:	glib2 >= 1:2.50.0
 Requires:	libepoxy >= 1.0
 Requires:	pango >= 1:1.38.0
 Requires:	xorg-lib-libXi >= 1.3.0
-Requires:	xorg-lib-libXrandr >= 1.3.0
+Requires:	xorg-lib-libXrandr >= 1.5.0
 %if %{with wayland}
 Requires:	wayland >= 1.9.91
 Requires:	xorg-lib-libxkbcommon >= 0.2.0
