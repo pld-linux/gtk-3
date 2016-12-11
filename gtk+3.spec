@@ -6,6 +6,7 @@
 %bcond_without	papi		# PAPI print backend
 %bcond_without	broadway	# Broadway target
 %bcond_with	mir		# Mir target
+%bcond_with	typeahead	# Typeahead in open dialog
 %bcond_without	wayland		# Wayland target
 %bcond_without	static_libs	# static library build
 
@@ -25,6 +26,7 @@ Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.22/gtk+-%{version}.tar.xz
 # Source0-md5:	55e0198f100db98f31d1b0f9dc403794
 Patch0:		%{name}-papi.patch
+Patch1:		typeahead.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
 BuildRequires:	atk-devel >= 1:2.16.0
@@ -277,6 +279,9 @@ Moduł GTK+ do drukowania przez PAPI.
 %prep
 %setup -q -n gtk+-%{version}
 %patch0 -p1
+%if %{with typeahead}
+%patch1 -p1
+%endif
 
 # for packaging clean examples
 # TODO: add am patch to do it like demos/gtk-demo via some configurable dir
