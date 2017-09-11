@@ -19,12 +19,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.22.17
+Version:	3.22.21
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.22/gtk+-%{version}.tar.xz
-# Source0-md5:	29f85430cf7cfa8ca8d0703ba65dbe11
+# Source0-md5:	622c0ae9a271bf55855a0d2d937d6d16
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 URL:		http://www.gtk.org/
@@ -83,7 +83,7 @@ BuildRequires:	xz
 BuildRequires:	Mesa-libwayland-egl-devel
 # wayland-client, wayland-cursor, wayland-scanner
 BuildRequires:	wayland-devel >= 1.9.91
-BuildRequires:	wayland-protocols >= 1.7
+BuildRequires:	wayland-protocols >= 1.9
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
@@ -424,6 +424,7 @@ exit 0
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gtk-3.0/im-multipress.conf
 %{_datadir}/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.gtk.Settings.EmojiChooser.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 %dir %{_datadir}/themes/Default/gtk-3.0
 %{_datadir}/themes/Default/gtk-3.0/gtk-keys.css
