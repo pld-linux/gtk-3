@@ -19,12 +19,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.22.28
+Version:	3.22.29
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.22/gtk+-%{version}.tar.xz
-# Source0-md5:	8c1f5ab987ddc7dab3e59660f89dcd9b
+# Source0-md5:	229a39f7d9ada53398baa39652630f2e
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 URL:		http://www.gtk.org/
@@ -415,6 +415,7 @@ exit 0
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-ti-er.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-ti-et.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-viqr.so
+%{?with_wayland:%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-wayland.so}
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-xim.so
 %{_libdir}/girepository-1.0/Gdk-3.0.typelib
 %{_libdir}/girepository-1.0/GdkX11-3.0.typelib
