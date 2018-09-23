@@ -67,14 +67,3 @@
  
  }
  
---- gtk+-3.2.3/modules/printbackends/papi/Makefile.am.orig	2011-11-07 19:47:37.000000000 +0100
-+++ gtk+-3.2.3/modules/printbackends/papi/Makefile.am	2011-12-23 19:55:00.277588009 +0100
-@@ -16,7 +16,7 @@
- 	$(top_builddir)/gtk/libgtk-3.la	\
- 	$(GTK_DEP_LIBS)
- 
--backenddir = $(libdir)/gtk-2.0/$(GTK_BINARY_VERSION)/printbackends
-+backenddir = $(libdir)/gtk-3.0/$(GTK_BINARY_VERSION)/printbackends
- 
- backend_LTLIBRARIES = libprintbackend-papi.la
- 

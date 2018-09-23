@@ -19,12 +19,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.22.30
+Version:	3.24.1
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.22/gtk+-%{version}.tar.xz
-# Source0-md5:	61e60dc073e0a6893c72043d20579dc0
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.24/gtk+-%{version}.tar.xz
+# Source0-md5:	9dfe16f486573815f242fa400763feb7
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 URL:		http://www.gtk.org/
@@ -415,7 +415,10 @@ exit 0
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-ti-er.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-ti-et.so
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-viqr.so
-%{?with_wayland:%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-wayland.so}
+%if %{with wayland}
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-wayland.so
+%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-waylandgtk.so
+%endif
 %attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/immodules/im-xim.so
 %{_libdir}/girepository-1.0/Gdk-3.0.typelib
 %{_libdir}/girepository-1.0/GdkX11-3.0.typelib
