@@ -20,7 +20,7 @@ Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
 Version:	3.24.1
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.24/gtk+-%{version}.tar.xz
@@ -80,9 +80,9 @@ BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
 %{?with_broadway:BuildRequires:	zlib-devel}
 %if %{with wayland}
-BuildRequires:	Mesa-libwayland-egl-devel
 # wayland-client, wayland-cursor, wayland-scanner
 BuildRequires:	wayland-devel >= 1.9.91
+BuildRequires:	wayland-egl-devel
 BuildRequires:	wayland-protocols >= 1.12
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
