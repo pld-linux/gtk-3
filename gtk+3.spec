@@ -1,3 +1,4 @@
+# TODO: cloudproviders >= 0.2.5 or --disable-cloudproviders
 #
 # Conditional build:
 %bcond_without	apidocs		# gtk-doc build
@@ -35,11 +36,13 @@ BuildRequires:	automake >= 1:1.11
 # cairo-gobject + cairo-pdf,cairo-ps,cairo-svg
 BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	colord-devel >= 0.1.9
+%{?with_mir:BuildRequires:	content-hub[-glib?]-devel}
 %if %{with cups} || %{with papi}
 BuildRequires:	cups-devel >= 1:1.2
 %endif
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl-nons
+BuildRequires:	fontconfig-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.31.0
 BuildRequires:	gettext-tools >= 0.19.7
 BuildRequires:	glib2-devel >= 1:2.50.0
@@ -49,15 +52,16 @@ BuildRequires:	gtk-doc >= 1.20
 BuildRequires:	gtk-doc-automake >= 1.20
 %endif
 BuildRequires:	harfbuzz-devel >= 0.9
+BuildRequires:	iso-codes
 %{?with_cloudprint:BuildRequires:	json-glib-devel >= 1.0}
-BuildRequires:	libepoxy-devel >= 1.0
+BuildRequires:	libepoxy-devel >= 1.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
 # mirclient >= 0.22.0, mircookie >= 0.17.0
 %{?with_mir:BuildRequires:	mir-devel >= 0.22.0}
-BuildRequires:	pango-devel >= 1:1.38.0
+BuildRequires:	pango-devel >= 1:1.41.0
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
@@ -92,8 +96,8 @@ Requires:	atk >= 1:2.16.0
 Requires:	cairo-gobject >= 1.14.0
 Requires:	gdk-pixbuf2 >= 2.31.0
 Requires:	glib2 >= 1:2.50.0
-Requires:	libepoxy >= 1.0
-Requires:	pango >= 1:1.38.0
+Requires:	libepoxy >= 1.4
+Requires:	pango >= 1:1.41.0
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.5.0
 %if %{with wayland}
@@ -190,7 +194,7 @@ Requires:	atk-devel >= 1:2.16.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.31.0
 Requires:	glib2-devel >= 1:2.50.0
-Requires:	pango-devel >= 1:1.38.0
+Requires:	pango-devel >= 1:1.41.0
 Requires:	shared-mime-info
 
 %description devel
