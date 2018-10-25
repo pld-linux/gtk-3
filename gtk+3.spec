@@ -1,4 +1,3 @@
-# TODO: cloudproviders >= 0.2.5 or --disable-cloudproviders
 #
 # Conditional build:
 %bcond_without	apidocs		# gtk-doc build
@@ -9,6 +8,7 @@
 %bcond_with	mir		# Mir target
 %bcond_with	typeahead	# Typeahead in open dialog
 %bcond_without	wayland		# Wayland target
+%bcond_with	cloudproviders	# libcloudproviders integration
 %bcond_without	static_libs	# static library build
 
 Summary:	The GIMP Toolkit
@@ -28,6 +28,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.24/gtk+-%{version}.tar.xz
 # Source0-md5:	9dfe16f486573815f242fa400763feb7
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
+Patch2:		%{name}-cloudproviders.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
 BuildRequires:	atk-devel >= 1:2.16.0
@@ -54,6 +55,7 @@ BuildRequires:	gtk-doc-automake >= 1.20
 BuildRequires:	harfbuzz-devel >= 0.9
 BuildRequires:	iso-codes
 %{?with_cloudprint:BuildRequires:	json-glib-devel >= 1.0}
+%{?with_cloudproviders:BuildRequires:	libcloudproviders-devel >= 0.2.5}
 BuildRequires:	libepoxy-devel >= 1.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
@@ -96,6 +98,7 @@ Requires:	atk >= 1:2.16.0
 Requires:	cairo-gobject >= 1.14.0
 Requires:	gdk-pixbuf2 >= 2.31.0
 Requires:	glib2 >= 1:2.50.0
+%{?with_cloudproviders:Requires:	libcloudproviders >= 0.2.5}
 Requires:	libepoxy >= 1.4
 Requires:	pango >= 1:1.41.0
 Requires:	xorg-lib-libXi >= 1.3.0
@@ -286,6 +289,7 @@ Moduł GTK+ do drukowania przez PAPI.
 %if %{with typeahead}
 %patch1 -p1
 %endif
+%patch2 -p1
 
 # for packaging clean examples
 # TODO: add am patch to do it like demos/gtk-demo via some configurable dir
@@ -309,7 +313,8 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 	%{!?with_cloudprint:--disable-cloudprint} \
 	%{__disable cups} \
 	%{!?with_papi:--disable-papi} \
-	%{?debug:--enable-debug=yes} \
+	%{?with_cloudproviders:--enable-cloudproviders} \
+	%{?debug:--enable-debug} \
 	%{__enable_disable apidocs gtk-doc} \
 	--enable-man \
 	%{__enable_disable static_libs static} \
