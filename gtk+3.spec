@@ -28,7 +28,8 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.24/gtk+-%{version}.tar.xz
 # Source0-md5:	378d327eeb24580fcbc941003de547b9
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
-Patch2:		%{name}-cloudproviders.patch
+Patch2:		%{name}-fribidi.patch
+Patch3:		%{name}-cloudproviders.patch
 URL:		http://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
 BuildRequires:	atk-devel >= 1:2.16.0
@@ -290,6 +291,7 @@ Moduł GTK+ do drukowania przez PAPI.
 %patch1 -p1
 %endif
 %patch2 -p1
+%patch3 -p1
 
 # for packaging clean examples
 # TODO: add am patch to do it like demos/gtk-demo via some configurable dir
