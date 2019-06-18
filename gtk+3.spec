@@ -20,12 +20,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.24.8
+Version:	3.24.9
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.24/gtk+-%{version}.tar.xz
-# Source0-md5:	eeedde01856238114dcf4df3ebc942a5
+# Source0-md5:	7b20f3aa3b36214150ea7a12d6bc384b
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 Patch2:		%{name}-cloudproviders.patch
@@ -39,7 +39,7 @@ BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	colord-devel >= 0.1.9
 %{?with_mir:BuildRequires:	content-hub[-glib?]-devel}
 %if %{with cups} || %{with papi}
-BuildRequires:	cups-devel >= 1:1.2
+BuildRequires:	cups-devel >= 1:1.7
 %endif
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl-nons
