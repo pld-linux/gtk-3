@@ -20,12 +20,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.24.10
+Version:	3.24.11
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.24/gtk+-%{version}.tar.xz
-# Source0-md5:	1b9f49a500a104a3e40f8d8eb7e6ce96
+# Source0-md5:	0a9581f9a1b71d1a2f57fae3adf46b94
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 Patch2:		%{name}-cloudproviders.patch
@@ -46,7 +46,7 @@ BuildRequires:	docbook-style-xsl-nons
 BuildRequires:	fontconfig-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.31.0
 BuildRequires:	gettext-tools >= 0.19.7
-BuildRequires:	glib2-devel >= 1:2.50.0
+BuildRequires:	glib2-devel >= 1:2.57.2
 BuildRequires:	gobject-introspection-devel >= 1.39.0
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.20
@@ -93,11 +93,11 @@ BuildRequires:	wayland-protocols >= 1.12
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
-Requires(post,postun):	glib2 >= 1:2.50.0
+Requires(post,postun):	glib2 >= 1:2.57.2
 Requires:	atk >= 1:2.16.0
 Requires:	cairo-gobject >= 1.14.0
 Requires:	gdk-pixbuf2 >= 2.31.0
-Requires:	glib2 >= 1:2.50.0
+Requires:	glib2 >= 1:2.57.2
 %{?with_cloudproviders:Requires:	libcloudproviders >= 0.2.5}
 Requires:	libepoxy >= 1.4
 Requires:	pango >= 1:1.41.0
@@ -171,7 +171,7 @@ Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
 Requires:	gdk-pixbuf2 >= 2.31.0
-Requires:	glib2 >= 1:2.50.0
+Requires:	glib2 >= 1:2.57.2
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -196,7 +196,7 @@ Requires:	at-spi2-atk-devel >= 2.6.0
 Requires:	atk-devel >= 1:2.16.0
 Requires:	cairo-gobject-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.31.0
-Requires:	glib2-devel >= 1:2.50.0
+Requires:	glib2-devel >= 1:2.57.2
 Requires:	pango-devel >= 1:1.41.0
 Requires:	shared-mime-info
 
@@ -237,7 +237,7 @@ Dokumentacja API GTK+.
 Summary:	GTK+ - example programs
 Summary(pl.UTF-8):	GTK+ - programy przykładowe
 Group:		X11/Development/Libraries
-Requires(post,postun):	glib2 >= 1:2.50.0
+Requires(post,postun):	glib2 >= 1:2.57.2
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description examples
