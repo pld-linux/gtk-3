@@ -20,12 +20,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.24.13
+Version:	3.24.14
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.24/gtk+-%{version}.tar.xz
-# Source0-md5:	f65515e7bfa2199bd2188e871d69c686
+# Source0-md5:	62e39212fa0a84016a3392a9d291faf8
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 Patch2:		%{name}-cloudproviders.patch
@@ -70,6 +70,7 @@ BuildRequires:	pkgconfig
 %{?with_cloudprint:BuildRequires:	rest-devel >= 0.7}
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.592
+BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libX11-devel >= 1.5.0
@@ -290,6 +291,8 @@ Moduł GTK+ do drukowania przez PAPI.
 %patch1 -p1
 %endif
 %patch2 -p1
+
+%{__sed} -i -e '1s|#!/usr/bin/env python3$|#!%{__python3}|' demos/gtk-demo/geninclude.py
 
 # for packaging clean examples
 # TODO: add am patch to do it like demos/gtk-demo via some configurable dir
