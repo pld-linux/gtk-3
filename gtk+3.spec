@@ -5,7 +5,7 @@
 %bcond_without	cups		# CUPS print backend
 %bcond_without	papi		# PAPI print backend
 %bcond_without	broadway	# Broadway target
-%bcond_with	mir		# Mir target
+%bcond_with	sysprof		# sysprof profiler support
 %bcond_with	typeahead	# Typeahead in open dialog
 %bcond_without	wayland		# Wayland target
 %bcond_with	cloudproviders	# libcloudproviders integration
@@ -29,7 +29,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.24/gtk+-%{version}.tar.xz
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 Patch2:		%{name}-cloudproviders.patch
-URL:		http://www.gtk.org/
+URL:		https://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
 BuildRequires:	atk-devel >= 1:2.16.0
 BuildRequires:	autoconf >= 2.62
@@ -37,13 +37,13 @@ BuildRequires:	automake >= 1:1.11
 # cairo-gobject + cairo-pdf,cairo-ps,cairo-svg
 BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	colord-devel >= 0.1.9
-%{?with_mir:BuildRequires:	content-hub[-glib?]-devel}
 %if %{with cups} || %{with papi}
 BuildRequires:	cups-devel >= 1:1.7
 %endif
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	docbook-style-xsl-nons
 BuildRequires:	fontconfig-devel
+BuildRequires:	fribidi-devel >= 0.19.7
 BuildRequires:	gdk-pixbuf2-devel >= 2.31.0
 BuildRequires:	gettext-tools >= 0.19.7
 BuildRequires:	glib2-devel >= 1:2.57.2
@@ -61,8 +61,6 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
-# mirclient >= 0.22.0, mircookie >= 0.17.0
-%{?with_mir:BuildRequires:	mir-devel >= 0.22.0}
 BuildRequires:	pango-devel >= 1:1.41.0
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
@@ -72,6 +70,7 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel
+%{?with_sysprof:BuildRequires:	sysprof-devel >= 3.33.2}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libX11-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXcomposite-devel
@@ -88,24 +87,26 @@ BuildRequires:	xz
 %{?with_broadway:BuildRequires:	zlib-devel}
 %if %{with wayland}
 # wayland-client, wayland-cursor, wayland-scanner
-BuildRequires:	wayland-devel >= 1.9.91
+BuildRequires:	wayland-devel >= 1.14.91
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.12
+BuildRequires:	wayland-protocols >= 1.14
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
 Requires(post,postun):	glib2 >= 1:2.57.2
 Requires:	atk >= 1:2.16.0
 Requires:	cairo-gobject >= 1.14.0
+Requires:	fribidi >= 0.19.7
 Requires:	gdk-pixbuf2 >= 2.31.0
 Requires:	glib2 >= 1:2.57.2
 %{?with_cloudproviders:Requires:	libcloudproviders >= 0.2.5}
 Requires:	libepoxy >= 1.4
 Requires:	pango >= 1:1.41.0
+%{?with_sysprof:Requires:	sysprof >= 3.33.2}
 Requires:	xorg-lib-libXi >= 1.3.0
 Requires:	xorg-lib-libXrandr >= 1.5.0
 %if %{with wayland}
-Requires:	wayland >= 1.9.91
+Requires:	wayland >= 1.14.91
 Requires:	xorg-lib-libxkbcommon >= 0.2.0
 %endif
 # evince is used as gtk-print-preview-command by default
@@ -196,10 +197,18 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	at-spi2-atk-devel >= 2.6.0
 Requires:	atk-devel >= 1:2.16.0
 Requires:	cairo-gobject-devel >= 1.14.0
+Requires:	fribidi-devel >= 0.19.7
 Requires:	gdk-pixbuf2-devel >= 2.31.0
 Requires:	glib2-devel >= 1:2.57.2
 Requires:	pango-devel >= 1:1.41.0
 Requires:	shared-mime-info
+%{?with_sysprof:Requires:	sysprof-devel >= 3.33.2}
+%if %{with wayland}
+Requires:	wayland-devel >= 1.14.91
+Requires:	wayland-egl-devel
+Requires:	wayland-protocols >= 1.14
+Requires:	xorg-lib-libxkbcommon-devel >= 0.2.0
+%endif
 
 %description devel
 Header files and development documentation for the GTK+ libraries.
@@ -322,7 +331,7 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 	--enable-man \
 	%{__enable_disable static_libs static} \
 	%{?with_broadway:--enable-broadway-backend} \
-	%{?with_mir:--enable-mir-backend} \
+	%{?with_sysprof:--enable-profiler} \
 	%{?with_wayland:--enable-wayland-backend} \
 	--enable-x11-backend \
 	--enable-xinerama \
@@ -478,10 +487,6 @@ exit 0
 %if %{with broadway}
 %{_pkgconfigdir}/gdk-broadway-3.0.pc
 %{_pkgconfigdir}/gtk+-broadway-3.0.pc
-%endif
-%if %{with mir}
-%{_pkgconfigdir}/gdk-mir-3.0.pc
-%{_pkgconfigdir}/gtk+-mir-3.0.pc
 %endif
 %if %{with wayland}
 %{_pkgconfigdir}/gdk-wayland-3.0.pc
