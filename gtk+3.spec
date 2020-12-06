@@ -20,12 +20,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.24.23
+Version:	3.24.24
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.24/gtk+-%{version}.tar.xz
-# Source0-md5:	fb383236280fb272ad5eb819f80ceb17
+Source0:	https://download.gnome.org/sources/gtk+/3.24/gtk+-%{version}.tar.xz
+# Source0-md5:	b34ca94542bf0bbb30f01a1d7453810d
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 Patch2:		%{name}-cloudproviders.patch
@@ -67,7 +67,7 @@ BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 %{?with_cloudprint:BuildRequires:	rest-devel >= 0.7}
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.592
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel
 %{?with_sysprof:BuildRequires:	sysprof-devel >= 3.33.2}
@@ -233,9 +233,7 @@ Summary:	GTK+ API documentation
 Summary(pl.UTF-8):	Dokumentacja API GTK+
 Group:		Documentation
 Requires:	gtk-doc-common
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description apidocs
 GTK+ API documentation.
