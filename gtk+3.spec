@@ -233,7 +233,7 @@ Summary:	GTK+ API documentation
 Summary(pl.UTF-8):	Dokumentacja API GTK+
 Group:		Documentation
 Requires:	gtk-doc-common
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description apidocs
 GTK+ API documentation.
