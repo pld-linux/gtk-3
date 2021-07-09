@@ -1,7 +1,6 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# gtk-doc build
-%bcond_without	cloudprint	# cloudprint print backend
 %bcond_without	cups		# CUPS print backend
 %bcond_without	papi		# PAPI print backend
 %bcond_without	broadway	# Broadway target
@@ -20,12 +19,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.24.29
+Version:	3.24.30
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/gtk+/3.24/gtk+-%{version}.tar.xz
-# Source0-md5:	196683c348fea50aae507e237b1973fa
+# Source0-md5:	1cfb66b3460ae5a62f964a5cc14c66b6
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 Patch2:		%{name}-cloudproviders.patch
@@ -54,7 +53,6 @@ BuildRequires:	gtk-doc-automake >= 1.20
 %endif
 BuildRequires:	harfbuzz-devel >= 0.9
 BuildRequires:	iso-codes
-%{?with_cloudprint:BuildRequires:	json-glib-devel >= 1.0}
 %{?with_cloudproviders:BuildRequires:	libcloudproviders-devel >= 0.2.5}
 BuildRequires:	libepoxy-devel >= 1.4
 BuildRequires:	libstdc++-devel
@@ -65,7 +63,6 @@ BuildRequires:	pango-devel >= 1:1.41.0
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
-%{?with_cloudprint:BuildRequires:	rest-devel >= 0.7}
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.752
@@ -116,6 +113,7 @@ Suggests:	evince-backend-pdf
 # cups is used by default if gtk+ is built with cups
 Suggests:	%{name}-cups = %{version}-%{release}
 %endif
+Obsoletes:	gtk+3-cloudprint < 3.24.30
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		abivers	3.0.0
@@ -255,18 +253,6 @@ GTK+ - example programs.
 %description examples -l pl.UTF-8
 GTK+ - przykładowe programy.
 
-%package cloudprint
-Summary:	Cloudprint printing module for GTK+
-Summary(pl.UTF-8):	Moduł GTK+ do drukowania przez Cloudprint
-Group:		X11/Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description cloudprint
-Cloudprint printing module for GTK+.
-
-%description cloudprint -l pl.UTF-8
-Moduł GTK+ do drukowania przez Cloudprint.
-
 %package cups
 Summary:	CUPS printing module for GTK+
 Summary(pl.UTF-8):	Moduł GTK+ do drukowania przez CUPS
@@ -321,7 +307,6 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 %{__automake}
 %configure \
 	--disable-silent-rules \
-	%{!?with_cloudprint:--disable-cloudprint} \
 	%{__disable cups} \
 	%{!?with_papi:--disable-papi} \
 	%{?with_cloudproviders:--enable-cloudproviders} \
@@ -536,12 +521,6 @@ exit 0
 %{_mandir}/man1/gtk3-icon-browser.1*
 %{_mandir}/man1/gtk3-widget-factory.1*
 %{_examplesdir}/%{name}-%{version}
-
-%if %{with cloudprint}
-%files cloudprint
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gtk-3.0/%{abivers}/printbackends/libprintbackend-cloudprint.so
-%endif
 
 %if %{with cups}
 %files cups
