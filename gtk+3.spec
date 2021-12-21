@@ -19,12 +19,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.24.30
+Version:	3.24.31
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/gtk+/3.24/gtk+-%{version}.tar.xz
-# Source0-md5:	1cfb66b3460ae5a62f964a5cc14c66b6
+# Source0-md5:	1c4821835d6ffe7cf5b35c320f89569b
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 Patch2:		%{name}-cloudproviders.patch
@@ -77,7 +77,7 @@ BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXft-devel
-BuildRequires:	xorg-lib-libXi-devel
+BuildRequires:	xorg-lib-libXi-devel >= 1.8.0
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXrender-devel
@@ -101,7 +101,7 @@ Requires:	glib2 >= 1:2.57.2
 Requires:	libepoxy >= 1.4
 Requires:	pango >= 1:1.41.0
 %{?with_sysprof:Requires:	sysprof >= 3.33.2}
-Requires:	xorg-lib-libXi >= 1.3.0
+Requires:	xorg-lib-libXi >= 1.8.0
 Requires:	xorg-lib-libXrandr >= 1.5.0
 %if %{with wayland}
 Requires:	wayland >= 1.14.91
