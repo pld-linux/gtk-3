@@ -20,7 +20,7 @@ Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
 Version:	3.24.31
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/gtk+/3.24/gtk+-%{version}.tar.xz
@@ -77,7 +77,7 @@ BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXft-devel
-BuildRequires:	xorg-lib-libXi-devel >= 1.8.0
+BuildRequires:	xorg-lib-libXi-devel >= 1.8
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel >= 1.5.0
 BuildRequires:	xorg-lib-libXrender-devel
@@ -101,7 +101,7 @@ Requires:	glib2 >= 1:2.57.2
 Requires:	libepoxy >= 1.4
 Requires:	pango >= 1:1.41.0
 %{?with_sysprof:Requires:	sysprof >= 3.33.2}
-Requires:	xorg-lib-libXi >= 1.8.0
+Requires:	xorg-lib-libXi >= 1.8
 Requires:	xorg-lib-libXrandr >= 1.5.0
 %if %{with wayland}
 Requires:	wayland >= 1.14.91
