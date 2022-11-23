@@ -19,12 +19,12 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.24.34
+Version:	3.24.35
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/gtk+/3.24/gtk+-%{version}.tar.xz
-# Source0-md5:	7e024190949d9071f9d72b0d559379e1
+# Source0-md5:	d65e5664d2798b18806742ecd0fb8cd7
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 Patch2:		%{name}-cloudproviders.patch
@@ -84,10 +84,10 @@ BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xz
 %{?with_broadway:BuildRequires:	zlib-devel}
 %if %{with wayland}
-# wayland-client, wayland-cursor, wayland-scanner
+# wayland-client, wayland-scanner
 BuildRequires:	wayland-devel >= 1.14.91
 BuildRequires:	wayland-egl-devel
-BuildRequires:	wayland-protocols >= 1.14
+BuildRequires:	wayland-protocols >= 1.21
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
 Requires:	xorg-lib-libX11 >= 1.5.0
@@ -296,6 +296,10 @@ cp -a demos examples _examples
 
 # upstream used too new wayland for make dist in 3.10.6 - force regeneration
 touch gdk/wayland/protocol/gtk-shell.xml
+
+# workaround for https://gitlab.gnome.org/GNOME/gtk/-/issues/5355
+# remove if it fails
+test ! -f gtk/gtkresources.c && %{__rm} testsuite/gtk/gtkresources.c
 
 %build
 CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
