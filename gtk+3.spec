@@ -19,20 +19,18 @@ Summary(it.UTF-8):	Il toolkit per GIMP
 Summary(pl.UTF-8):	GIMP Toolkit
 Summary(tr.UTF-8):	GIMP ToolKit arayüz kitaplığı
 Name:		gtk+3
-Version:	3.24.35
+Version:	3.24.36
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/gtk+/3.24/gtk+-%{version}.tar.xz
-# Source0-md5:	d65e5664d2798b18806742ecd0fb8cd7
+# Source0-md5:	fd4571a112ffaa2fbbb9d25de8f5b6c0
 Patch0:		%{name}-papi.patch
 Patch1:		typeahead.patch
 Patch2:		%{name}-cloudproviders.patch
 URL:		https://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
 BuildRequires:	atk-devel >= 1:2.16.0
-BuildRequires:	autoconf >= 2.62
-BuildRequires:	automake >= 1:1.11
 # cairo-gobject + cairo-pdf,cairo-ps,cairo-svg
 BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	colord-devel >= 0.1.9
@@ -49,16 +47,16 @@ BuildRequires:	glib2-devel >= 1:2.57.2
 BuildRequires:	gobject-introspection-devel >= 1.39.0
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.20
-BuildRequires:	gtk-doc-automake >= 1.20
 %endif
 BuildRequires:	harfbuzz-devel >= 0.9
 BuildRequires:	iso-codes
 %{?with_cloudproviders:BuildRequires:	libcloudproviders-devel >= 0.2.5}
 BuildRequires:	libepoxy-devel >= 1.4
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
+BuildRequires:	meson
+BuildRequires:	ninja
 BuildRequires:	pango-devel >= 1:1.41.0
 %{?with_papi:BuildRequires:	papi-devel}
 BuildRequires:	perl-base
@@ -294,59 +292,33 @@ Moduł GTK+ do drukowania przez PAPI.
 install -d _examples
 cp -a demos examples _examples
 
-# upstream used too new wayland for make dist in 3.10.6 - force regeneration
-touch gdk/wayland/protocol/gtk-shell.xml
-
-# workaround for https://gitlab.gnome.org/GNOME/gtk/-/issues/5355
-# remove if it fails
-test ! -f gtk/gtkresources.c && %{__rm} testsuite/gtk/gtkresources.c
-
 %build
 CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
-%{?with_apidocs:%{__gtkdocize}}
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--disable-silent-rules \
-	%{__disable cups} \
-	%{!?with_papi:--disable-papi} \
-	%{?with_cloudproviders:--enable-cloudproviders} \
-	%{?debug:--enable-debug} \
-	%{__enable_disable apidocs gtk-doc} \
-	--enable-man \
-	%{__enable_disable static_libs static} \
-	%{?with_broadway:--enable-broadway-backend} \
-	%{?with_sysprof:--enable-profiler} \
-	%{?with_wayland:--enable-wayland-backend} \
-	--enable-x11-backend \
-	--enable-xinerama \
-	--enable-xkb \
-	--with-html-dir=%{_gtkdocdir}
+%meson build \
+	-Dprint_backends=file,lpr%{?with_cups:,cups}%{?with_papi:,papi} \
+	-Dcloudproviders=%{__true_false cloudproviders} \
+	-Dgtk_doc=%{__true_false apidocs} \
+	-Dman=true \
+	-Dbroadway_backend=%{__true_false broadway} \
+	-Dprofiler=%{__true_false sysprof} \
+	-Dwayland_backend=%{__true_false wayland} \
+	-Dx11_backend=true \
+	-Dxinerama=yes
 
-%{__make} \
-	democodedir=%{_examplesdir}/%{name}-%{version}/demos/gtk-demo
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/engines
 install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/theming-engines
 
-%{__make} install \
-	democodedir=%{_examplesdir}/%{name}-%{version}/demos/gtk-demo \
-	DESTDIR=$RPM_BUILD_ROOT
+%ninja_install -C build
 
 touch $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
 install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -a _examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-
-# shut up check-files (static modules and *.la for modules)
-%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/*/*.la \
-	%{?with_static_libs:$RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/*/*.a}
 
 %if "%{_lib}" != "lib"
 # We need to have 32-bit and 64-bit binaries as they have hardcoded LIBDIR.
@@ -357,8 +329,6 @@ mv $RPM_BUILD_ROOT%{_bindir}/gtk-query-immodules-3.0{,%{pqext}}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/{sr@ije,sr@ijekavian}
 # unsupported by glibc
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/io
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name} --all-name
 
@@ -392,7 +362,7 @@ exit 0
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README
+%doc NEWS README.md
 %{?with_broadway:%attr(755,root,root) %{_bindir}/broadwayd}
 %attr(755,root,root) %{_bindir}/gtk-launch
 %attr(755,root,root) %{_bindir}/gtk-query-immodules-3.0%{pqext}
@@ -457,7 +427,6 @@ exit 0
 
 %files devel
 %defattr(644,root,root,755)
-%doc ChangeLog
 %attr(755,root,root) %{_bindir}/gtk-builder-tool
 %attr(755,root,root) %{_bindir}/gtk-query-settings
 %attr(755,root,root) %{_libdir}/libgailutil-3.so
