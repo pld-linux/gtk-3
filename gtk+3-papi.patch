@@ -67,3 +67,34 @@
  
  }
  
+--- gtk+-3.24.36/modules/printbackends/meson.build.orig	2022-12-22 15:01:18.000000000 +0100
++++ gtk+-3.24.36/modules/printbackends/meson.build	2022-12-25 12:15:51.137673110 +0100
+@@ -51,9 +51,9 @@ if enabled_print_backends.contains('test
+ endif
+ 
+ if enabled_print_backends.contains('papi')
+-  # TODO
+-  if print_strict_deps
+-    error('\'papi\' backend not supported with meson yet')
++  papi_dep = cc.find_library('papi', required: print_strict_deps)
++  if papi_dep.found()
++    print_backends += ['papi']
+   endif
+ endif
+ 
+@@ -138,4 +138,15 @@ if print_backends.contains('cups')
+                 install_dir: printbackends_install_dir,
+                 name_suffix: module_suffix,
+                 install : true)
++endif
++
++if print_backends.contains('papi')
++  shared_module('printbackend-papi',
++                'papi/gtkprintbackendpapi.c',
++                'papi/gtkprinterpapi.c',
++                c_args: printbackends_args,
++                dependencies: [libgtk_dep, papi_dep],
++                install_dir: printbackends_install_dir,
++                name_suffix: module_suffix,
++                install : true)
+ endif

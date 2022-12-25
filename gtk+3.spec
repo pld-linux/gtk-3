@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	apidocs		# gtk-doc build
 %bcond_without	cups		# CUPS print backend
-%bcond_with	papi		# PAPI print backend
+%bcond_without	papi		# PAPI print backend
 %bcond_without	broadway	# Broadway target
 %bcond_with	sysprof		# sysprof profiler support
 %bcond_with	typeahead	# Typeahead in open dialog
