@@ -55,7 +55,7 @@ BuildRequires:	libepoxy-devel >= 1.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libxml2-progs >= 1:2.6.31
 BuildRequires:	libxslt-progs >= 1.1.20
-BuildRequires:	meson
+BuildRequires:	meson >= 0.60.0
 BuildRequires:	ninja
 BuildRequires:	pango-devel >= 1:1.41.0
 %{?with_papi:BuildRequires:	papi-devel}
