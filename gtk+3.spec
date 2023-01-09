@@ -332,8 +332,6 @@ mv $RPM_BUILD_ROOT%{_bindir}/gtk-query-immodules-3.0{,%{pqext}}
 
 %find_lang %{name} --all-name
 
-%{!?with_apidocs:%{__rm} -r $RPM_BUILD_ROOT%{_gtkdocdir}/{gdk3,gtk3}}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
