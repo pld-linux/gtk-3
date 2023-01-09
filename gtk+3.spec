@@ -31,6 +31,7 @@ Patch2:		%{name}-cloudproviders.patch
 URL:		https://www.gtk.org/
 BuildRequires:	at-spi2-atk-devel >= 2.6.0
 BuildRequires:	atk-devel >= 1:2.16.0
+BuildRequires:	automake
 # cairo-gobject + cairo-pdf,cairo-ps,cairo-svg
 BuildRequires:	cairo-gobject-devel >= 1.14.0
 BuildRequires:	colord-devel >= 0.1.9
