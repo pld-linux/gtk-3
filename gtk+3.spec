@@ -296,6 +296,7 @@ cp -a demos examples _examples
 %build
 CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 %meson build \
+	%{!?with_static_libs:--default-library=shared} \
 	-Dprint_backends=file,lpr%{?with_cups:,cups}%{?with_papi:,papi} \
 	-Dcloudproviders=%{__true_false cloudproviders} \
 	-Dgtk_doc=%{__true_false apidocs} \
