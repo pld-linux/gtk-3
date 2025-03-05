@@ -64,7 +64,7 @@ BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel
 %{?with_sysprof:BuildRequires:	sysprof-devel >= 3.33.2}
@@ -295,7 +295,7 @@ cp -a demos examples _examples
 
 %build
 CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
-%meson build \
+%meson \
 	%{!?with_static_libs:--default-library=shared} \
 	-Dprint_backends=file,lpr%{?with_cups:,cups}%{?with_papi:,papi} \
 	-Dcloudproviders=%{__true_false cloudproviders} \
@@ -307,14 +307,14 @@ CPPFLAGS="%{rpmcppflags}%{?with_papi: -I/usr/include/papi}"
 	-Dx11_backend=true \
 	-Dxinerama=yes
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/engines
 install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/theming-engines
 
-%ninja_install -C build
+%meson_install
 
 touch $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/%{abivers}/gtk.immodules
 install -d $RPM_BUILD_ROOT%{_libdir}/gtk-3.0/modules
