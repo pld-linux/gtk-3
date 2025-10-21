@@ -89,28 +89,28 @@ BuildRequires:	wayland-egl-devel
 BuildRequires:	wayland-protocols >= 1.21
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.2.0
 %endif
-Requires:	xorg-lib-libX11 >= 1.5.0
 Requires(post,postun):	glib2 >= 1:2.57.2
-Requires:	atk >= 1:2.16.0
-Requires:	cairo-gobject >= 1.14.0
-Requires:	fribidi >= 0.19.7
-Requires:	gdk-pixbuf2 >= 2.31.0
-Requires:	glib2 >= 1:2.57.2
-%{?with_cloudproviders:Requires:	libcloudproviders >= 0.2.5}
-Requires:	libepoxy >= 1.4
-Requires:	pango >= 1:1.41.0
+Requires:	atk%{?_isa} >= 1:2.16.0
+Requires:	cairo-gobject%{?_isa} >= 1.14.0
+Requires:	fribidi%{?_isa} >= 0.19.7
+Requires:	gdk-pixbuf2%{?_isa} >= 2.31.0
+Requires:	glib2%{?_isa} >= 1:2.57.2
+%{?with_cloudproviders:Requires:	libcloudproviders%{?_isa} >= 0.2.5}
+Requires:	libepoxy%{?_isa} >= 1.4
+Requires:	pango%{?_isa} >= 1:1.41.0
 %{?with_sysprof:Requires:	sysprof >= 3.33.2}
-Requires:	xorg-lib-libXi >= 1.8
-Requires:	xorg-lib-libXrandr >= 1.5.0
+Requires:	xorg-lib-libX11%{?_isa} >= 1.5.0
+Requires:	xorg-lib-libXi%{?_isa} >= 1.8
+Requires:	xorg-lib-libXrandr%{?_isa} >= 1.5.0
 %if %{with wayland}
-Requires:	wayland >= 1.14.91
-Requires:	xorg-lib-libxkbcommon >= 0.2.0
+Requires:	wayland%{?_isa} >= 1.14.91
+Requires:	xorg-lib-libxkbcommon%{?_isa} >= 0.2.0
 %endif
 # evince is used as gtk-print-preview-command by default
-Suggests:	evince-backend-pdf
+Suggests:	evince-backend-pdf%{?_isa}
 %if %{with cups}
 # cups is used by default if gtk+ is built with cups
-Suggests:	%{name}-cups = %{version}-%{release}
+Suggests:	%{name}-cups%{?_isa} = %{version}-%{release}
 %endif
 Obsoletes:	gtk+3-cloudprint < 3.24.30
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -170,8 +170,8 @@ programlarca da kullanılmaktadır.
 Summary:	Utility to update icon cache used by GTK+ library
 Summary(pl.UTF-8):	Narzędzie do uaktualniania cache'a ikon używanego przez bibliotekę GTK+
 Group:		Applications/System
-Requires:	gdk-pixbuf2 >= 2.31.0
-Requires:	glib2 >= 1:2.57.2
+Requires:	gdk-pixbuf2%{?_isa} >= 2.31.0
+Requires:	glib2%{?_isa} >= 1:2.57.2
 
 %description -n gtk-update-icon-cache
 Utility to update icon cache used by GTK+ library.
@@ -191,21 +191,21 @@ Summary(it.UTF-8):	GIMP Toolkit and GIMP Drawing Kit
 Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do GTK+
 Summary(tr.UTF-8):	GIMP araç takımı ve çizim takımı
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	at-spi2-atk-devel >= 2.6.0
-Requires:	atk-devel >= 1:2.16.0
-Requires:	cairo-gobject-devel >= 1.14.0
-Requires:	fribidi-devel >= 0.19.7
-Requires:	gdk-pixbuf2-devel >= 2.31.0
-Requires:	glib2-devel >= 1:2.57.2
-Requires:	pango-devel >= 1:1.41.0
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	at-spi2-atk-devel%{?_isa} >= 2.6.0
+Requires:	atk-devel%{?_isa} >= 1:2.16.0
+Requires:	cairo-gobject-devel%{?_isa} >= 1.14.0
+Requires:	fribidi-devel%{?_isa} >= 0.19.7
+Requires:	gdk-pixbuf2-devel%{?_isa} >= 2.31.0
+Requires:	glib2-devel%{?_isa} >= 1:2.57.2
+Requires:	pango-devel%{?_isa} >= 1:1.41.0
 Requires:	shared-mime-info
-%{?with_sysprof:Requires:	sysprof-devel >= 3.33.2}
+%{?with_sysprof:Requires:	sysprof-devel%{?_isa} >= 3.33.2}
 %if %{with wayland}
-Requires:	wayland-devel >= 1.14.91
-Requires:	wayland-egl-devel
+Requires:	wayland-devel%{?_isa} >= 1.14.91
+Requires:	wayland-egl-devel%{?_isa}
 Requires:	wayland-protocols >= 1.14
-Requires:	xorg-lib-libxkbcommon-devel >= 0.2.0
+Requires:	xorg-lib-libxkbcommon-devel%{?_isa} >= 0.2.0
 %endif
 
 %description devel
@@ -218,7 +218,7 @@ Pliki nagłówkowe i dokumentacja do bibliotek GTK+.
 Summary:	GTK+ static libraries
 Summary(pl.UTF-8):	Biblioteki statyczne GTK+
 Group:		X11/Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 
 %description static
 GTK+ static libraries.
@@ -256,7 +256,7 @@ GTK+ - przykładowe programy.
 Summary:	CUPS printing module for GTK+
 Summary(pl.UTF-8):	Moduł GTK+ do drukowania przez CUPS
 Group:		X11/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description cups
 CUPS printing module for GTK+.
@@ -268,7 +268,7 @@ Moduł GTK+ do drukowania przez CUPS.
 Summary:	PAPI printing module for GTK+
 Summary(pl.UTF-8):	Moduł GTK+ do drukowania przez PAPI
 Group:		X11/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 Requires:	papi
 
 %description papi
