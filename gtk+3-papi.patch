@@ -98,3 +98,23 @@
 +                name_suffix: module_suffix,
 +                install : true)
  endif
+--- gtk-3.24.52/modules/printbackends/papi/gtkprintbackendpapi.c.orig	2026-03-24 00:31:40.471577927 +0100
++++ gtk-3.24.52/modules/printbackends/papi/gtkprintbackendpapi.c	2026-03-24 00:35:56.146428426 +0100
+@@ -490,7 +490,7 @@
+                                 status == PAPI_OK;
+                                 status = papiAttributeListGetString(attributes,
+                                                 &iter, NULL, &member))
+-                                        list_append(&names, strdup(member));
++                                        list_append((void***)&names, strdup(member));
+                 }
+                 papiPrinterFree(printer);
+         }
+@@ -518,7 +518,7 @@
+ 			(void) papiAttributeListGetString(attributes, NULL,
+ 							"printer-name", &name);
+ 			if ((name != NULL) && (strcmp(name, "_default") != 0))
+-    				list_append(&names, strdup(name));
++    				list_append((void***)&names, strdup(name));
+     		}
+     		papiPrinterListFree(printers);
+     	}
